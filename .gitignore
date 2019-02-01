@@ -31,6 +31,7 @@
 /src/test/
 
 ### other ###
+/log/
 mvnw
 mvnw.cmd
 !.gitignore
