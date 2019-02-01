@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>记录</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/master.css">
+  <link rel="stylesheet" href="/css/add.css">
+</head>
+<body>
+<div id="app">
+  <div class="name">Akira_Kuroba</div>
+  <div class="container">
+    <div class="item col-md-3">
+      <div class="title">记<br />录</div>
+    </div>
+    <div class="item main col-md-7" style="
+      border-right: 1.2px solid #66645f;
+      border-left: 1.2px solid #66645f;">
+      <form id="add" action="123" method="post" @submit="submit">
+        <input class="text-input" type="text" name="title" v-model="title">
+        <textarea name="content" rows="8" cols="80" v-model="content"></textarea>
+        <input id="hide" type="submit" style="display: none;" />
+      </form>
+    </div>
+    <div class="item col-md-2">
+      <label for="hide">
+        <div id="submit">
+          完成
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" src="/js/add.js"></script>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>注册</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/master.css">
+  <style media="screen">
+    body {
+      background: rgb(211, 203, 198);
+      font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+    }
+
+    .container {
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+    }
+
+    .container .model {
+      margin: 100px auto;
+      height: 500px;
+      text-align: center;
+    }
+
+    .text-input {
+      color: #000000d6;
+      border-bottom: 1.3px solid #0000004f;
+      font-size: 20px;
+      margin: 39px auto;
+      width: 300px;
+    }
+
+    input.error {
+      border-bottom: 1.3px solid #d46b2a;
+    }
+
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="container">
+    <div class="model right-border col-lg-3"
+      style="font-size: 70px; padding-top: 122px">
+      注<br />册
+    </div>
+    <div class="model right-border col-lg-7">
+      <form id="reg" action="456" method="post" @submit="submit">
+        <input class="text-input" :class="{error: errors[0]}" type="text" name="username" v-model="username" autocomplete="off" placeholder="仅包含字母和下划线的用户名，6至20位"
+          style="margin-top: 70px;">
+        <input class="text-input" :class="{error: errors[1]}" type="password" name="password" v-model="password" placeholder="密码，6至20位">
+        <input class="text-input" :class="{error: errors[2]}" type="password" name="repeat" v-model="repeat" placeholder="密码，请在此重复输入">
+        <input class="text-input" :class="{error: errors[3]}" type="text" name="email" v-model="email" autocomplete="off" placeholder="邮箱，仅作找回密码使用">
+        <input class="text-input" :class="{error: errors[4]}" type="text" name="code" v-model="code" autocomplete="off" placeholder="邀请码">
+        <input id="sb" type="submit" style="display: none;">
+      </form>
+    </div>
+    <div class="model col-lg-2">
+      <label for="sb">
+        <div style="
+            font-size: 30px;
+            width: 90px;
+            height: 46px;
+            position: absolute;
+            outline: none;
+            top: 200px;">
+          登録
+          <hr style="margin: 2px; border-top: 2px solid rgba(0,0,0,.1);">
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="../js/vue.min.js"></script>
+<script type="text/javascript" src="../js/register.js"></script>
+</html>

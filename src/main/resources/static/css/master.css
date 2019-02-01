@@ -1,0 +1,111 @@
+/* 项目的公共样式 */
+
+body {
+  /* font-family: "Merriweather", Georgia, serif; */
+  /* font-family: soleil, Raleway, sans-serif; */
+  /* font-family: 'lora'; */
+  font-family: 'FangSong', 'STFangSong';
+  background: #5a565f;
+}
+
+/*清除滚动栏*/
+body::-webkit-scrollbar {
+  display:none;
+}
+
+.name {
+  display: inline-block;
+  color: #f7f7fa;
+  margin: 12px;
+  margin-bottom: 5px;
+
+  font-family: "Merriweather", Georgia, serif;
+  font-size: 17px;
+}
+
+a {
+  text-decoration: none;
+  color: #f7f7fa;
+}
+
+a:active {
+  text-decoration: none;
+  color: #f7f7fa;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #f7f7fa;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #f7f7fa;
+}
+
+textarea {
+  overflow:hidden;
+  outline: none;
+  background: transparent;
+  border: 0;
+  resize: none;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.clr {
+  float: none;
+}
+
+.font-hr {
+  margin:  0;
+  margin-top: 3px;
+  background: #30303061;
+}
+
+input {
+  outline: none;
+}
+
+.text-input {
+  font-family: "Merriweather", Georgia, serif;
+  background: inherit;
+  border: none;
+  display: block;
+  margin: auto;
+  font-size: 16px;
+}
+
+.text-input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    /* color: #aab2bd; */
+    /* placeholder字体大小  */
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* 形如div的button */
+.div-btn {
+  outline: none;
+  border: 0px;
+  background: transparent;
+}
+
+button {
+  outline: none;
+}
+
+.right-border {
+  border: none;
+  border-right: 1px solid #0000005e;
+}
+
+li {
+  list-style-type: none;
+}

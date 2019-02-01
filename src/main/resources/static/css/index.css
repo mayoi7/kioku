@@ -1,0 +1,29 @@
+/* 主页的样式 */
+body {
+  background: rgb(232, 122, 144);
+}
+
+/* 形如div的button */
+.div-btn {
+  outline: none;
+  border: 0px;
+  background: transparent;
+}
+
+.container .item {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+
+  margin: 30px 30px;
+  padding: 15px;
+  top: 270px;
+
+  width: 230px;
+  height: 115px;
+}
+
+.container .item .title {
+  font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+  font-size: 50px;
+}

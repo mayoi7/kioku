@@ -1,0 +1,86 @@
+body {
+  font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+  background: #d8e698;
+}
+
+.name {
+  color: #303322;
+}
+
+a, a:hover, a:active {
+  color: #000;
+}
+
+.container {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+
+.side-bar {
+  border: none;
+  border-right: 1px solid #000;
+
+  overflow-y: auto;
+  height: 600px;
+}
+
+.side-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.side-bar li {
+  height: 57px;
+  text-align: center;
+  padding: 7px 7px;
+  margin-bottom: 4px;
+
+  background: transparent;
+  -webkit-transition: background .35s;
+  -o-transition: background .35s;
+  transition: background .35s;
+}
+
+.side-bar li.active {
+  border-left: 2px solid #e6a697;
+}
+
+.side-bar li.sleep {
+  border-left: none;
+}
+
+.side-bar li .sm-date {
+  position: relative;
+  font-size: 12px;
+  width: 125px;
+  height: 18px;
+}
+
+.side-bar li:hover {
+  background: #bfcc87;
+}
+
+.container .show {
+  height: 600px;
+}
+
+.show .title {
+  font-size: 28px;
+  font-weight: 600;
+  height: 45px;
+  margin-bottom: 27px;
+}
+
+.show .content {
+  min-height: 200px;
+  max-height: 400px;
+  font-size: 27px;
+}
+
+.show .time {
+  float: right;
+  font-size: 22px;
+  font-weight: 700;
+  height: 30px;
+  margin: 10px 5px;
+}

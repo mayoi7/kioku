@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>登陆</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/master.css">
+  <style media="screen">
+    body {
+      background: #f4b3c2;
+    }
+
+    .title {
+      margin-top: 145px;
+      color: #664a51;
+      text-align: center;
+      font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+      font-size: 90px;
+    }
+
+    #login {
+      text-align: center;
+    }
+
+    .text-input {
+      color: #664a51;
+      border-bottom: 2.3px solid #664a51;
+      font-size: 20px;
+      margin: 35px auto;
+      width: 267px;
+    }
+
+    .container .option {
+      width: 400px;
+      text-align: center;
+      margin: 28px auto;
+    }
+
+    .container .option a {
+      font-size: 18px;
+      margin: auto 22px;
+    }
+
+    .text-input::-webkit-input-placeholder {
+        /* placeholder颜色  */
+        color: #997079;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="container">
+    <div class="title">記憶</div>
+    <form id="login" action="123" method="post">
+      <input class="text-input" type="text" name="username" v-model="username" placeholder="此处用户名" autocomplete="off">
+      <input class="text-input" type="password" name="password" v-model="password" placeholder="此处密码" autocomplete="off">
+      <button type="submit" class="div-btn" style="font-size: 30px; outline: none;">登陆</button>
+    </form>
+    <div class="option">
+      <a href="#" class="forget">忘记密码</a>
+      <a href="#" class="register">账号注册</a>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+</html>
