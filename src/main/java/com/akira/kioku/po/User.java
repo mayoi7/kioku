@@ -5,10 +5,13 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @author 刘昊楠
+ */
 @Data
 @Entity
 @Table(name = "user")
-public class User  implements Serializable {
+public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -22,7 +25,7 @@ public class User  implements Serializable {
 
 	private String code;
 
-	private Long role;
+	private Integer role;
 
 	@Column(name = "gmt_create")
 	private java.util.Date gmtCreate;

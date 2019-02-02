@@ -5,10 +5,13 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @author 刘昊楠
+ */
 @Data
 @Entity
 @Table(name = "content")
-public class Content  implements Serializable {
+public class Content implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
