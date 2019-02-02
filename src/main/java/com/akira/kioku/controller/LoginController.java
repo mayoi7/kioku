@@ -46,16 +46,21 @@ public class LoginController {
             try {
                 subject.login(token);
             } catch (UnknownAccountException uae) {
+                log.warn("[登陆]用户名错误，用户名为{}", username);
                 return ResultUtil.error("用户名错误");
             } catch (IncorrectCredentialsException ice) {
+                log.warn("[登陆]用户{}密码错误", username, password);
                 return ResultUtil.error("密码错误");
             } catch (LockedAccountException lae) {
+                log.warn("[登陆]用户{}被锁定", username);
                 return ResultUtil.error("账号被锁定");
             } catch (AuthenticationException ae) {
+                log.warn("[登陆]用户{}发生未知异常", username);
                 return ResultUtil.error("未知认证异常");
             }
         }
 
+        log.info("[登陆]用户{}正常登陆", username);
         return ResultUtil.success();
     }
 
