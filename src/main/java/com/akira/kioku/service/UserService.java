@@ -21,4 +21,11 @@ public interface UserService {
      * @return 10：普通用户，11：管理员，12：被锁定的用户
      */
     Integer findRoleByUsername(String username);
+
+    /**
+     * 注册用户
+     * 用户权限默认置为11(普通用户)
+     * @param user 将要注册的用户信息
+     */
+    void registerUser(User user);
 }

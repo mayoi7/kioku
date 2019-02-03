@@ -1,5 +1,6 @@
 package com.akira.kioku.service.impl;
 
+import com.akira.kioku.constant.UserConstant;
 import com.akira.kioku.po.User;
 import com.akira.kioku.repository.UserRepository;
 import com.akira.kioku.service.UserService;
@@ -31,5 +32,12 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return user.getRole();
+    }
+
+    @Override
+    public void registerUser(User user) {
+        // 设置权限为普通用户
+        user.setRole(UserConstant.USER_ROLE);
+        userRepository.save(user);
     }
 }

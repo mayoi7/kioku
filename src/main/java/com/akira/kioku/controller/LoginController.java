@@ -4,6 +4,7 @@ import com.akira.kioku.po.Code;
 import com.akira.kioku.po.User;
 import com.akira.kioku.service.CodeService;
 import com.akira.kioku.service.UserService;
+import com.akira.kioku.utils.EntityUtil;
 import com.akira.kioku.utils.ResultUtil;
 import com.akira.kioku.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,10 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.html.parser.Entity;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 /**
  * 包括登陆以及用户信息注册在内
@@ -100,5 +105,32 @@ public class LoginController {
         } else {
             return ResultUtil.success();
         }
+    }
+
+    @PostMapping("register")
+    public ResultVo registerUser(
+            @Size(min=6,max=20) String username,
+            @Size(min=6,max=20) String password,
+            @Email String email,
+            String code) {
+        User user = EntityUtil.encryptAndStorageAsUser(username, password, email, code);
+
+        userService.registerUser(user);
+
+        // 自动执行登陆
+        Subject subject = SecurityUtils.getSubject();
+        // 密码是加密后的密码
+        UsernamePasswordToken token = new UsernamePasswordToken(username, user.getPassword());
+        token.setRememberMe(true);
+
+        try {
+            subject.login(token);
+        } catch (Exception e) {
+            // 不可能发生用户名或密码错误以及被锁定等异常，但可能会有其他异常
+            log.error("[注册]用户{}注册完毕自动登陆异常");
+            return ResultUtil.error("自动登陆失败");
+        }
+
+        return ResultUtil.success();
     }
 }
