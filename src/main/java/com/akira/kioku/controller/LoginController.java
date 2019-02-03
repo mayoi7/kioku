@@ -93,7 +93,7 @@ public class LoginController {
      * @param username 要检测的用户名
      * @return 返回是否可用，success为可用
      */
-    @GetMapping("detect/{username}")
+    @GetMapping("detect/name/{username}")
     public ResultVo usernameDetection(@PathVariable String username) {
         User user = userService.findByUsername(username);
         if(user == null) {
@@ -107,7 +107,7 @@ public class LoginController {
      * @param code 要检测的邀请码
      * @return 错误码1代表邀请码不存在，2代表邀请码已被使用，success表示邀请码可用
      */
-    @GetMapping("detect/{code}")
+    @GetMapping("detect/code/{code}")
     public ResultVo codeDetection(@PathVariable String code) {
         Code res = codeService.findByCode(code);
         if(res == null) {
