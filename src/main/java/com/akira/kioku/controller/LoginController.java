@@ -1,6 +1,8 @@
 package com.akira.kioku.controller;
 
+import com.akira.kioku.po.Code;
 import com.akira.kioku.po.User;
+import com.akira.kioku.service.CodeService;
 import com.akira.kioku.service.UserService;
 import com.akira.kioku.utils.ResultUtil;
 import com.akira.kioku.vo.ResultVo;
@@ -23,9 +25,12 @@ public class LoginController {
 
     private final UserService userService;
 
+    private final CodeService codeService;
+
     @Autowired
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, CodeService codeService) {
         this.userService = userService;
+        this.codeService = codeService;
     }
 
     /**
@@ -81,5 +86,19 @@ public class LoginController {
             return ResultUtil.success();
         }
         return ResultUtil.error("username already exists");
+    }
+
+    @GetMapping("detect/{code}")
+    public ResultVo codeDetection(@PathVariable String code) {
+        Code res = codeService.findByCode(code);
+        if(res == null) {
+            // 不存在这样的邀请码
+            return ResultUtil.error("nonexistent code");
+        } else if(res.getUid() != null) {
+            // 邀请码已被使用
+            return ResultUtil.error("used code");
+        } else {
+            return ResultUtil.success();
+        }
     }
 }
