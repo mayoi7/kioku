@@ -137,9 +137,14 @@ public class LoginController {
             String code) {
         User user = EntityUtil.encryptAndStorageAsUser(username, password, email, code);
 
-        userService.registerUser(user);
-        log.info("[注册]用户{}注册账号成功", username);
+        User record = userService.registerUser(user);
+        if(record == null) {
+            // 说明出现了插入异常
+            return ResultUtil.error(1, "注册失败");
+        }
+        codeService.setUsed(code, record.getId());
 
+        log.info("[注册]用户{}注册账号成功", username);
 
         // 自动执行登陆
         Subject subject = SecurityUtils.getSubject();
@@ -152,7 +157,7 @@ public class LoginController {
         } catch (Exception e) {
             // 不可能发生用户名或密码错误以及被锁定等异常，但可能会有其他异常
             log.error("[注册]用户{}注册完毕自动登陆异常", username);
-            return ResultUtil.error("自动登陆失败");
+            return ResultUtil.error(2, "自动登陆失败");
         }
 
         return ResultUtil.success();
