@@ -1,5 +1,6 @@
 package com.akira.kioku.controller;
 
+import com.akira.kioku.po.User;
 import com.akira.kioku.service.UserService;
 import com.akira.kioku.utils.ResultUtil;
 import com.akira.kioku.vo.ResultVo;
@@ -71,5 +72,14 @@ public class LoginController {
         //注销
         subject.logout();
         return ResultUtil.success();
+    }
+
+    @GetMapping("detect/{username}")
+    public ResultVo usernameDetection(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+        if(user == null) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error("username already exists");
     }
 }
