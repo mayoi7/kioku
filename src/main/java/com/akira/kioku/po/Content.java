@@ -1,6 +1,8 @@
 package com.akira.kioku.po;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +13,8 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "content")
+@DynamicInsert
+@DynamicUpdate
 public class Content implements Serializable {
 
 	@Id
