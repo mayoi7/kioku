@@ -26,6 +26,7 @@ public interface UserService {
      * 注册用户
      * 用户权限默认置为11(普通用户)
      * @param user 将要注册的用户信息
+     * @return 插入后的数据库中的用户记录（主要为了获取插入后的id）
      */
-    void registerUser(User user);
+    User registerUser(User user);
 }

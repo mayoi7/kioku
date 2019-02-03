@@ -35,9 +35,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registerUser(User user) {
+    public User registerUser(User user) {
         // 设置权限为普通用户
         user.setRole(UserConstant.USER_ROLE);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 }
