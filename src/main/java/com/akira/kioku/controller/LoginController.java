@@ -75,6 +75,10 @@ public class LoginController {
         return ResultUtil.success();
     }
 
+    /**
+     * 用户注销
+     * @return 只返回成功
+     */
     @GetMapping("/logout")
     public ResultVo logout() {
         Subject subject = SecurityUtils.getSubject();
@@ -84,6 +88,11 @@ public class LoginController {
         return ResultUtil.success();
     }
 
+    /**
+     * 检测用户名是否可用
+     * @param username 要检测的用户名
+     * @return 返回是否可用，success为可用
+     */
     @GetMapping("detect/{username}")
     public ResultVo usernameDetection(@PathVariable String username) {
         User user = userService.findByUsername(username);
@@ -93,20 +102,33 @@ public class LoginController {
         return ResultUtil.error("username already exists");
     }
 
+    /**
+     * 检测邀请码是否可用
+     * @param code 要检测的邀请码
+     * @return 错误码1代表邀请码不存在，2代表邀请码已被使用，success表示邀请码可用
+     */
     @GetMapping("detect/{code}")
     public ResultVo codeDetection(@PathVariable String code) {
         Code res = codeService.findByCode(code);
         if(res == null) {
             // 不存在这样的邀请码
-            return ResultUtil.error("nonexistent code");
+            return ResultUtil.error(1, "nonexistent code");
         } else if(res.getUid() != null) {
             // 邀请码已被使用
-            return ResultUtil.error("used code");
+            return ResultUtil.error(2, "used code");
         } else {
             return ResultUtil.success();
         }
     }
 
+    /**
+     * 进行用户的注册，在注册完毕后进行自动登陆
+     * @param username 用户名
+     * @param password 密码（未加密）
+     * @param email 邮箱
+     * @param code 邀请码
+     * @return success为成功
+     */
     @PostMapping("register")
     public ResultVo registerUser(
             @Size(min=6,max=20) String username,
@@ -116,6 +138,8 @@ public class LoginController {
         User user = EntityUtil.encryptAndStorageAsUser(username, password, email, code);
 
         userService.registerUser(user);
+        log.info("[注册]用户{}注册账号成功", username);
+
 
         // 自动执行登陆
         Subject subject = SecurityUtils.getSubject();
@@ -127,7 +151,7 @@ public class LoginController {
             subject.login(token);
         } catch (Exception e) {
             // 不可能发生用户名或密码错误以及被锁定等异常，但可能会有其他异常
-            log.error("[注册]用户{}注册完毕自动登陆异常");
+            log.error("[注册]用户{}注册完毕自动登陆异常", username);
             return ResultUtil.error("自动登陆失败");
         }
 
