@@ -7,7 +7,7 @@ import com.akira.kioku.po.User;
  * @author Kripath
  * @date Created in 11:56 2019/2/3
  */
-public class InfoUtil {
+public class EntityUtil {
 
     /**
      * 将用户信息封装成用户对象，同时对密码进行加密
