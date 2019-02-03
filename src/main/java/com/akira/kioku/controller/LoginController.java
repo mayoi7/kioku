@@ -14,7 +14,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -149,7 +148,7 @@ public class LoginController {
         // 自动执行登陆
         Subject subject = SecurityUtils.getSubject();
         // 密码是加密后的密码
-        UsernamePasswordToken token = new UsernamePasswordToken(username, user.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(true);
 
         try {
