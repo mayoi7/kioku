@@ -24,4 +24,12 @@ public class CodeServiceImpl implements CodeService {
     public Code findByCode(String code) {
         return codeRepository.findByCode(code);
     }
+
+    @Override
+    public void setUsed(String code, Long uid) {
+        Code record = codeRepository.findByCode(code);
+        record.setUid(uid);
+
+        codeRepository.save(record);
+    }
 }
