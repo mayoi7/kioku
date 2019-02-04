@@ -18,7 +18,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 /**
- * 包括登陆以及用户信息注册在内
+ * 包括登陆以及用户信息注册在内的功能
  * @author Kripath
  * @date Created in 11:28 2019/2/2
  */
@@ -43,7 +43,8 @@ public class LoginController {
      * @param password 密码
      */
     @PostMapping("/login")
-    public ResultVo login(String username, String password) {
+    public ResultVo login(@RequestParam("username") String username,
+                          @RequestParam("password") String password) {
 
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
@@ -57,16 +58,16 @@ public class LoginController {
                 subject.login(token);
             } catch (UnknownAccountException uae) {
                 log.warn("[登陆]用户名错误，用户名为{}", username);
-                return ResultUtil.error("用户名错误");
+                return ResultUtil.error(1, "用户名错误");
             } catch (IncorrectCredentialsException ice) {
                 log.warn("[登陆]用户{}密码错误", username, password);
-                return ResultUtil.error("密码错误");
+                return ResultUtil.error(2, "密码错误");
             } catch (LockedAccountException lae) {
                 log.warn("[登陆]用户{}被锁定", username);
-                return ResultUtil.error("账号被锁定");
+                return ResultUtil.error(3, "账号被锁定");
             } catch (AuthenticationException ae) {
                 log.warn("[登陆]用户{}发生未知异常", username);
-                return ResultUtil.error("未知认证异常");
+                return ResultUtil.error(4, "未知认证异常");
             }
         }
 
