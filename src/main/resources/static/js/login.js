@@ -7,10 +7,21 @@ var app = new Vue({
     },
     methods: {
       submit: function (e) {
-        e.preventDefault();
-        fetch('/test/msg').then(response => response.json()).then(data => {
+        if(this.username.length === 0 || this.password.length === 0) {
+            alert("用户名和密码不能为空");
+            e.preventDefault();
+            return;
+        }
+
+        $.post("login/login", {
+            username: this.username,
+            password: this.password
+        }, (data) => {
             console.log(data);
+            e.preventDefault();
         });
+
+        e.preventDefault();
       }
     }
 });
