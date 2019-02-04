@@ -9,19 +9,21 @@ var app = new Vue({
       submit: function (e) {
         if(this.username.length === 0 || this.password.length === 0) {
             alert("用户名和密码不能为空");
-            e.preventDefault();
-            return;
+            return false;
         }
 
         $.post("login/login", {
             username: this.username,
             password: this.password
         }, (data) => {
-            console.log(data);
-            e.preventDefault();
+            if(data.code === 0) {
+                window.location='/';
+            }
+            else {
+                alert(data.msg);
+                return false;
+            }
         });
-
-        e.preventDefault();
-      }
+      },
     }
 });
