@@ -13,6 +13,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -35,6 +36,14 @@ public class LoginController {
     public LoginController(UserService userService, CodeService codeService) {
         this.userService = userService;
         this.codeService = codeService;
+    }
+
+    /**
+     * 跳转到登陆页面
+     */
+    @RequestMapping("")
+    public ModelAndView loginPage() {
+        return new ModelAndView("login/login");
     }
 
     /**

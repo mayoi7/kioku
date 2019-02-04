@@ -21,13 +21,13 @@ public class BaseController {
     public String index() {
         return "index";
     }
-
-    /**
-     * 跳转到登陆页面
-     */
-    @RequestMapping("login")
-    public String loginPage() {
-        return "login/login";
-    }
+//
+//    /**
+//     * 跳转到登陆页面
+//     */
+//    @RequestMapping("login")
+//    public String loginPage() {
+//        return "login/login";
+//    }
 
 }
