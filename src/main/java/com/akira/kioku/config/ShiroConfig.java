@@ -44,8 +44,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
 
-        // 开放登陆接口
+        // 开放登陆及注册接口
         filterChainDefinitionMap.put("/login/**", "anon");
+        filterChainDefinitionMap.put("/page/register", "anon");
         // 开放测试接口
         // isRemember() || isAuthentication()
          filterChainDefinitionMap.put("/test/**", "anon");

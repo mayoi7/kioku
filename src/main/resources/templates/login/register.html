@@ -47,13 +47,13 @@
       注<br />册
     </div>
     <div class="model right-border col-lg-7">
-      <form id="reg" action="456" method="post" @submit="submit">
-        <input class="text-input" :class="{error: errors[0]}" type="text" name="username" v-model="username" autocomplete="off" placeholder="仅包含字母和下划线的用户名，6至20位"
+      <form id="reg" action="#" method="post" @submit.prevent="submit">
+        <input class="text-input" :class="{error: errors[0]}" type="text" name="username" v-model="user.username" autocomplete="off" placeholder="仅包含字母和下划线的用户名，6至20位"
           style="margin-top: 70px;">
-        <input class="text-input" :class="{error: errors[1]}" type="password" name="password" v-model="password" placeholder="密码，6至20位">
-        <input class="text-input" :class="{error: errors[2]}" type="password" name="repeat" v-model="repeat" placeholder="密码，请在此重复输入">
-        <input class="text-input" :class="{error: errors[3]}" type="text" name="email" v-model="email" autocomplete="off" placeholder="邮箱，仅作找回密码使用">
-        <input class="text-input" :class="{error: errors[4]}" type="text" name="code" v-model="code" autocomplete="off" placeholder="邀请码">
+        <input class="text-input" :class="{error: errors[1]}" type="password" name="password" v-model="user.password" placeholder="密码，6至20位">
+        <input class="text-input" :class="{error: errors[2]}" type="password" name="repeat" v-model="user.repeat" placeholder="密码，请在此重复输入">
+        <input class="text-input" :class="{error: errors[3]}" type="text" name="email" v-model="user.email" autocomplete="off" placeholder="邮箱，仅作找回密码使用">
+        <input class="text-input" :class="{error: errors[4]}" type="text" name="code" v-model="user.code" autocomplete="off" placeholder="邀请码">
         <input id="sb" type="submit" style="display: none;">
       </form>
     </div>
@@ -74,6 +74,7 @@
   </div>
 </div>
 </body>
-<script type="text/javascript" src="../js/vue.min.js"></script>
-<script type="text/javascript" src="../js/register.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" src="/js/register.js"></script>
 </html>

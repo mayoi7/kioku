@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 控制主页及其他一部分页面的跳转
@@ -21,13 +22,13 @@ public class BaseController {
     public String index() {
         return "index";
     }
-//
-//    /**
-//     * 跳转到登陆页面
-//     */
-//    @RequestMapping("login")
-//    public String loginPage() {
-//        return "login/login";
-//    }
+
+    /**
+     * 跳转到注册页面
+     */
+    @RequestMapping("page/register")
+    public ModelAndView registerPage() {
+        return new ModelAndView("login/register");
+    }
 
 }
