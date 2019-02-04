@@ -53,7 +53,7 @@
 <div id="app">
   <div class="container">
     <div class="title">記憶</div>
-    <form id="login" action="/" method="post" @submit="submit">
+    <form id="login" action="/" method="post" @submit.prevent="submit">
       <input class="text-input" type="text" name="username" v-model="username" placeholder="此处用户名" autocomplete="off">
       <input class="text-input" type="password" name="password" v-model="password" placeholder="此处密码" autocomplete="off">
       <button type="submit" class="div-btn" style="font-size: 30px; outline: none;">登陆</button>
