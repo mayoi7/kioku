@@ -32,10 +32,10 @@ var app = new Vue({
             this.errors[4].isErr) {
           return false;
         } else {
-          $.post("login/register", this.user, (data) => {
+          $.post("/login/register", this.user, (data) => {
             if(data.code === 0) {
               // 跳转首页
-              window.location("/");
+                window.location='/';
             } else {
 
             }
@@ -97,14 +97,14 @@ var app = new Vue({
         /* 异步校验邀请码合法性 */
           $.get("/login/detect/code/" + this.user.code, (data) => {
               // 假如用户名重复（code为1），将错误标志置为真
-              if(data.code !== 0) {
+              if(data.code === 0) {
+                  // 邀请码可用
+                  this.errors[4].isErr = false;
+                  this.errors[4].msg = "可用";
+              } else {
                   // 邀请码不可用
                   this.errors[4].isErr = true;
                   this.errors[4].msg = data.msg;
-              } else {
-                  // 邀请码可用
-                  this.errors[4].isErr = true;
-                  this.errors[4].msg = "可用";
               }
           });
       },
