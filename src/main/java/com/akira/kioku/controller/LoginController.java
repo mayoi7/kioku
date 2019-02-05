@@ -108,7 +108,7 @@ public class LoginController {
         if(user == null) {
             return ResultUtil.success();
         }
-        return ResultUtil.error("username already exists");
+        return ResultUtil.error("已被使用的用户名");
     }
 
     /**
@@ -121,10 +121,10 @@ public class LoginController {
         Code res = codeService.findByCode(code);
         if(res == null) {
             // 不存在这样的邀请码
-            return ResultUtil.error(1, "nonexistent code");
+            return ResultUtil.error(1, "不存在的邀请码");
         } else if(res.getUid() != null) {
             // 邀请码已被使用
-            return ResultUtil.error(2, "used code");
+            return ResultUtil.error(2, "被使用的邀请码");
         } else {
             return ResultUtil.success();
         }
