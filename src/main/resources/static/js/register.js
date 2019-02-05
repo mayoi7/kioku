@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 const re_email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const re_username = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){6,20}$/;
-const re_password = /^(?:\d+|[a-zA-Z]+|[!@#$%^&*]+){6,20}$/;
+const re_username = /^[a-zA-Z]([a-zA-Z0-9]|[._]){5,20}$/;
+const re_password = /^(?:\d+|[a-zA-Z]+|[!@#$%^&*]+){5,20}$/;
 
 var app = new Vue({
     el: '#app',
@@ -45,36 +45,67 @@ var app = new Vue({
       },
       validUsername: function() {
         /*不匹配*/
-        // if(!re_username.test(this.username)) this.errors[0] = true;
-        this.errors[0].isErr = (!re_username.test(this.user.username));
-        this.errors[0].msg = '用户名不合法';
+        if(!re_username.test(this.user.username)) {
+            // 用户名格式不正确
+            this.errors[0].isErr = true;
+            this.errors[0].msg = '格式不正确的用户名';
+            return false;
+        }
+
 
         /*异步校验用户名是否重复*/
           $.get("/login/detect/name/" + this.user.username, (data) => {
             // 假如用户名重复（code为1），将错误标志置为真
             if(data.code === 0) {
-                this.errors[0].msg = '可用';
                 this.errors[0].isErr = false;
+                this.errors[0].msg = '可用';
             } else {
-                this.errors[0].msg = '用户名被使用';
                 this.errors[0].isErr = true;
+                this.errors[0].msg = data.msg;
             }
           });
       },
       validPassword: function() {
-        this.errors[1].isErr = (!re_password.test(this.user.password));
+          if(re_password.test(this.user.password)) {
+              // 符合密码格式
+              this.errors[1].isErr = false;
+              this.errors[1].msg = "可用";
+          } else {
+              this.errors[1].isErr = true;
+              this.errors[1].msg = "不符合规范的密码";
+          }
       },
       validRepeat: function() {
-        this.errors[2].isErr = (this.user.repeat !== this.user.password);
+          if(this.user.repeat !== this.user.password) {
+              this.errors[2].isErr = true;
+              this.errors[2].msg = '不一致的两次输入';
+          } else {
+              this.errors[2].isErr = false;
+              this.errors[2].msg = "一致";
+          }
       },
       validEmail: function () {
-        this.errors[3].isErr = (!re_email.test(this.user.email));
+          if(re_email.test(this.user.email)) {
+              this.errors[3].isErr = false;
+              this.errors[3].msg = "可用";
+          } else {
+              this.errors[3].isErr = true;
+              this.errors[3].msg = "格式不正确的邮箱";
+          }
       },
       validCode: function() {
         /* 异步校验邀请码合法性 */
           $.get("/login/detect/code/" + this.user.code, (data) => {
               // 假如用户名重复（code为1），将错误标志置为真
-              this.errors[4].isErr = (data.code !== 0);
+              if(data.code !== 0) {
+                  // 邀请码不可用
+                  this.errors[4].isErr = true;
+                  this.errors[4].msg = data.msg;
+              } else {
+                  // 邀请码可用
+                  this.errors[4].isErr = true;
+                  this.errors[4].msg = "可用";
+              }
           });
       },
       validAll: function() {

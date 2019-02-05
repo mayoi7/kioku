@@ -52,7 +52,7 @@
           color: #1a9d25;
       }
 
-    .input-div .msg .error {
+    .input-div .msg.error {
         color: #d71313;
     }
 
@@ -69,27 +69,27 @@
       <form id="reg" action="#" method="post" @submit.prevent="submit">
           <div class="input-div">
             <input class="text-input" :class="{error: errors[0].isErr}" type="text" name="username"
-                   v-model="user.username" autocomplete="off" placeholder="仅包含字母和下划线的用户名，6至20位" style="margin-top: 70px;">
+                   v-model="user.username" @blur="validUsername" autocomplete="off" placeholder="仅包含字母和下划线的用户名，6至20位" style="margin-top: 70px;">
             <div class="msg" :class="{error: errors[0].isErr}">{{errors[0].msg}}</div>
           </div>
           <div class="input-div">
               <input class="text-input" :class="{error: errors[1].isErr}" type="password" name="password"
-                     v-model="user.password" placeholder="密码，6至20位">
+                     v-model="user.password" @blur="validPassword" placeholder="密码，6至20位">
               <div class="msg" :class="{error: errors[1].isErr}">{{errors[1].msg}}</div>
           </div>
           <div class="input-div">
               <input class="text-input" :class="{error: errors[2].isErr}" type="password" name="repeat"
-                     v-model="user.repeat" placeholder="密码，请在此重复输入">
+                     v-model="user.repeat" @blur="validRepeat" placeholder="密码，请在此重复输入">
               <div class="msg" :class="{error: errors[2].isErr}">{{errors[2].msg}}</div>
           </div>
           <div class="input-div">
               <input class="text-input" :class="{error: errors[3].isErr}" type="text" name="email"
-                     v-model="user.email" autocomplete="off" placeholder="邮箱，仅作找回密码使用">
+                     v-model="user.email" @blur="validEmail" autocomplete="off" placeholder="邮箱，仅作找回密码使用">
               <div class="msg" :class="{error: errors[3].isErr}">{{errors[3].msg}}</div>
           </div>
           <div class="input-div">
               <input class="text-input" :class="{error: errors[4].isErr}" type="text" name="code"
-                     v-model="user.code" autocomplete="off" placeholder="邀请码">
+                     v-model="user.code" @blur="validCode" autocomplete="off" placeholder="邀请码">
               <div class="msg" :class="{error: errors[4].isErr}">{{errors[4].msg}}</div>
           </div>
         <input id="sb" type="submit" style="display: none;">
