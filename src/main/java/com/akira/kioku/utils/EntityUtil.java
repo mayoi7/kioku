@@ -1,12 +1,18 @@
 package com.akira.kioku.utils;
 
+import com.akira.kioku.dto.UserInfo;
+import com.akira.kioku.enums.RoleEnum;
 import com.akira.kioku.po.User;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.management.relation.Role;
 
 /**
  * 负责对pojo进行一些处理
  * @author Kripath
  * @date Created in 11:56 2019/2/3
  */
+@Slf4j
 public class EntityUtil {
 
     /**
@@ -25,5 +31,26 @@ public class EntityUtil {
         user.setCode(code);
 
         return user;
+    }
+
+    /**
+     * 将{@link User}对象封装成{@link UserInfo}对象
+     * @param user User类型的对象
+     * @return UserInfo类型的对象
+     */
+    public static UserInfo packageUserAsUserInfo(User user) {
+        if(user == null) {
+            return null;
+        }
+
+        // 查询权限码对应的权限
+        RoleEnum roleEnum = EnumUtil.getByCode(user.getRole(), RoleEnum.class);
+        String msg = null;
+        if (roleEnum != null) {
+            msg = roleEnum.getMsg();
+        } else {
+            log.warn("[权限]用户{}权限码{}异常", user.getUsername(), user.getRole());
+        }
+        return new UserInfo(user.getId(), user.getUsername(), msg);
     }
 }
