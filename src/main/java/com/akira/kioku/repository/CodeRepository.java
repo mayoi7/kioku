@@ -11,5 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CodeRepository extends JpaRepository<Code, Long> {
 
+    /**
+     * 通过邀请码的值查询记录
+     * @param code 邀请码的值
+     * @return Code实体对象
+     */
     Code findByCode(String code);
 }
