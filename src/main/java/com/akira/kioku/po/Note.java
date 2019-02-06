@@ -22,6 +22,8 @@ public class Note implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	private Long uid;
+
 	private String title;
 
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
