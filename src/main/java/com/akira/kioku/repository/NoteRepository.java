@@ -20,12 +20,13 @@ import java.util.List;
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
     /**
-     * 查询某用户的所有note
+     * 查询某用户的所有note，按时间倒序排序
      * @param uid 作者id
      * @param pageable 分页类
      * @return {@link NotePackageable}的集合
      */
     @Query(value = "SELECT note.id, note.title, content, note.gmt_create gmtCreate " +
-            "FROM note, content WHERE note.id = content.nid AND note.uid = 2", nativeQuery = true)
+            "FROM note, content WHERE note.id = content.nid AND note.uid = 2 " +
+            "ORDER BY note.id DESC", nativeQuery = true)
     Page<NotePackageable> findByUidAsInfo(@Param("uid") Long uid, Pageable pageable);
 }
