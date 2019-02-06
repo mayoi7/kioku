@@ -9,6 +9,8 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * @author Kripath
  * @date Created in 16:58 2019/2/1
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return user.getRole();
     }
 
+    @Transactional(rollbackOn = Exception.class)
     @Override
     public User registerUser(User user) {
         // 设置权限为普通用户
