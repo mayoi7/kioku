@@ -1,11 +1,14 @@
 package com.akira.kioku.utils;
 
+import com.akira.kioku.dto.NoteInfo;
+import com.akira.kioku.dto.NotePackageable;
 import com.akira.kioku.dto.UserInfo;
 import com.akira.kioku.enums.RoleEnum;
 import com.akira.kioku.po.User;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.management.relation.Role;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 负责对pojo进行一些处理
@@ -52,5 +55,18 @@ public class EntityUtil {
             log.warn("[权限]用户{}权限码{}异常", user.getUsername(), user.getRole());
         }
         return new UserInfo(user.getId(), user.getUsername(), msg);
+    }
+
+    /**
+     * 将抽象接口的列表转换成DTO返回
+     * @param notes {@link NotePackageable}的List
+     * @return {@link NoteInfo}的List
+     */
+    public static List<NoteInfo> packageAbstractNotesToInfoList(List<NotePackageable> notes) {
+        List<NoteInfo> list = new ArrayList<>(notes.size());
+        for (NotePackageable note : notes) {
+            list.add(new NoteInfo(note));
+        }
+        return list;
     }
 }
