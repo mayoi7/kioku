@@ -1,7 +1,15 @@
 package com.akira.kioku.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.akira.kioku.constant.NoteConstant;
+import com.akira.kioku.dto.NoteInfo;
+import com.akira.kioku.service.NoteService;
+import com.akira.kioku.utils.ResultUtil;
+import com.akira.kioku.vo.ResultVo;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 关于note的操作
@@ -10,6 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("note")
+@Slf4j
 public class NoteController {
+
+    private final NoteService noteService;
+
+    @Autowired
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
+
+    /**
+     * 返回一页记录，每页数量在常量类{@link NoteConstant}中记录
+     * @param userId 所要查询的用户id
+     * @param page 页号，默认为0
+     * @return 查询的一页的结果
+     */
+    @GetMapping("all/{userId}")
+    public ResultVo returnAll(@PathVariable("userId") Long userId,
+                              @RequestParam(defaultValue = "0") Integer page) {
+        List<NoteInfo> notes = noteService.listAllInPage(userId, page);
+        return ResultUtil.success(notes);
+    }
 
 }
