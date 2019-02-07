@@ -1,13 +1,9 @@
 package com.akira.kioku.controller;
 
-import com.akira.kioku.utils.ResultUtil;
-import com.akira.kioku.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 控制主页及其他一部分页面的跳转
@@ -27,8 +23,19 @@ public class BaseController {
      * 跳转到注册页面
      */
     @RequestMapping("page/register")
-    public ModelAndView registerPage() {
-        return new ModelAndView("login/register");
+    public String goRegisterPage() {
+        return "login/register";
     }
 
+    @RequiresRoles("user")
+    @RequestMapping("page/browse")
+    public String goBrowsePage() {
+        return "option/browse";
+    }
+
+    @RequiresRoles("user")
+    @RequestMapping("page/add")
+    public String goAddPage() {
+        return "option/add";
+    }
 }
