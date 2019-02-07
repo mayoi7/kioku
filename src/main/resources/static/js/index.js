@@ -8,7 +8,13 @@ var $app = new Vue({
         });
 
         return {
-            'user': {}
+            'user': {},
+            'isShow': false // 是否显示用户信息操作的下拉栏
         };
+    },
+    methods: {
+        switchBar: function(e) {
+            this.isShow = !this.isShow;
+        }
     }
 });
