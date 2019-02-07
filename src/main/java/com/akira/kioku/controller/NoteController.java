@@ -39,6 +39,7 @@ public class NoteController {
     public ResultVo returnAll(@PathVariable("userId") Long userId,
                               @RequestParam(defaultValue = "0") Integer page) {
         List<NoteInfo> notes = noteService.listAllInPage(userId, page);
+        log.info("[日记]获取id{}用户的所有记录", userId);
         return ResultUtil.success(notes);
     }
 
