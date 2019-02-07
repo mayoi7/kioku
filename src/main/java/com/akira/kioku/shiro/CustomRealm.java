@@ -65,7 +65,6 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("————权限认证————");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         //获得该用户角色
         Integer role = userService.findRoleByUsername(username);
