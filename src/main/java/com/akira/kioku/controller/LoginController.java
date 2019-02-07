@@ -89,12 +89,13 @@ public class LoginController {
      * @return 只返回成功
      */
     @GetMapping("/logout")
-    public ResultVo logout() {
+    public ModelAndView logout() {
         Subject subject = SecurityUtils.getSubject();
 
         //注销
         subject.logout();
-        return ResultUtil.success();
+        // 跳转到登陆页
+        return new ModelAndView("redirect:/login");
     }
 
     /**
