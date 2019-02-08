@@ -54,4 +54,10 @@ public class NoteController {
         log.info("[日记]获取id为{}用户的所有记录", userId);
         return ResultUtil.success(notes);
     }
+
+    @PostMapping("/{userId}")
+    public ResultVo saveNote(@PathVariable("userId") Long userId, @RequestBody NoteInfo note) {
+        noteService.saveNote(userId, note);
+        return ResultUtil.success();
+    }
 }

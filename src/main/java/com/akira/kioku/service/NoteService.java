@@ -23,7 +23,14 @@ public interface NoteService {
      * <p>页号在{@link NoteConstant}</p>中规定
      * @param userId 用户id
      * @param pageNum note的集合
-     * @return
+     * @return 一页记录
      */
     List<NoteInfo> listAllInPage(Long userId, int pageNum);
+
+    /**
+     * 添加一条日记
+     * @param userId 日记的作者用户id
+     * @param note {@link NoteInfo}对象
+     */
+    void saveNote(Long userId, NoteInfo note);
 }

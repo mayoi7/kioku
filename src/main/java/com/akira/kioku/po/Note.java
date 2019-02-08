@@ -1,7 +1,9 @@
 package com.akira.kioku.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -16,6 +18,8 @@ import java.io.Serializable;
 @Table(name = "note")
 @DynamicInsert
 @DynamicUpdate
+@AllArgsConstructor
+@NoArgsConstructor
 public class Note implements Serializable {
 
 	@Id
@@ -32,5 +36,10 @@ public class Note implements Serializable {
 
 	@Column(name = "gmt_modified")
 	private java.util.Date gmtModified;
+
+	public Note(Long uid, String title) {
+	    this.uid = uid;
+	    this.title = title;
+    }
 
 }
