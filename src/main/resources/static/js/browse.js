@@ -14,10 +14,10 @@ Date.prototype.format = function(format) {
                     .replace(RegExp.$1, (this.getFullYear() + '')
                     .substr(4 - RegExp.$1.length));
    }
-   for (var k in date) {
+   for (let k in date) {
           if (new RegExp("(" + k + ")").test(format)) {
                  format = format.replace(RegExp.$1,
-                    RegExp.$1.length == 1 ? date[k] : ("00" + date[k])
+                    RegExp.$1.length === 1 ? date[k] : ("00" + date[k])
                           .substr(("" + date[k]).length));
           }
    }
@@ -29,48 +29,26 @@ var STRING_DATE_FORMAT = 'yyyy-MM-dd h:m:s';
 var $app = new Vue({
   el: '#app',
   data: function() {
-    // 模拟异步数据接收
-    let notes =  [
-      {
-        id: 10,
-        title: '神盾局好见风使舵海口警方的说法',
-        content: 'aaaaaaaaaaaaaaaaa',
-        date: 1499655375
-      },
-      {
-        id: 11,
-        title: 'bbbb',
-        content: 'bbbbbbbbbbbbbbbbb',
-        date: 1499655375
-      },
-      {
-        id: 12,
-        title: 'cccc',
-        content: 'ccccccccccccccccc',
-        date: 1499655375
-      },
-      {
-        id: 13,
-        title: 'dddd',
-        content: 'ddddddddddddddddd',
-        date: 1499655375
-      },
-      {
-        id: 14,
-        title: 'eeee',
-        content: 'eeeeeeeeeeeeeeeee',
-        date: 1499655375
-      },
-    ];
-    let current = {};
-    if(notes.length > 0) current = notes[0];
-    notes.forEach(elem => {
-      elem.date = new Date(elem.date).format(STRING_DATE_FORMAT);
+    $.get("/user/info", (data) => {
+        if(data.code === 0) {
+            this.user = data.data;
+            $.get("/note/all/" + data.data.id, (d) => {
+                if(d.code === 0) {
+                    this.notes = d.data;
+                    if(d.data.length > 0) this.current = d.data[0];
+
+                    this.notes.forEach(elem => {
+                        elem.date = new Date(elem.date).format(STRING_DATE_FORMAT);
+                    });
+                }
+            });
+        }
     });
 
     return {
-      notes: notes,
-      current: current
+        user : {},
+        notes: {},
+        current: {}
     };
   },
   methods: {
