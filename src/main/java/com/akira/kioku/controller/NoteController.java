@@ -29,18 +29,29 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+//    /**
+//     * 返回一页记录，每页数量在常量类{@link NoteConstant}中记录
+//     * @param userId 所要查询的用户id
+//     * @param page 页号，默认为0
+//     * @return 查询的一页的结果
+//     */
+//    @GetMapping("all/{userId}")
+//    public ResultVo returnAll(@PathVariable("userId") Long userId,
+//                              @RequestParam(defaultValue = "0") Integer page) {
+//        List<NoteInfo> notes = noteService.listAllInPage(userId, page);
+//        log.info("[日记]获取id为{}用户的第{}页记录", userId, page);
+//        return ResultUtil.success(notes);
+//    }
+
     /**
-     * 返回一页记录，每页数量在常量类{@link NoteConstant}中记录
+     * 返回用户所有记录
      * @param userId 所要查询的用户id
-     * @param page 页号，默认为0
-     * @return 查询的一页的结果
+     * @return 查询的所有结果
      */
     @GetMapping("all/{userId}")
-    public ResultVo returnAll(@PathVariable("userId") Long userId,
-                              @RequestParam(defaultValue = "0") Integer page) {
-        List<NoteInfo> notes = noteService.listAllInPage(userId, page);
-        log.info("[日记]获取id{}用户的所有记录", userId);
+    public ResultVo returnAll(@PathVariable("userId") Long userId) {
+        List<NoteInfo> notes = noteService.listAll(userId);
+        log.info("[日记]获取id为{}用户的所有记录", userId);
         return ResultUtil.success(notes);
     }
-
 }
