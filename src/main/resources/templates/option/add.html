@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id="app">
-  <div class="name">Akira_Kuroba</div>
+  <div class="name">{{user.username}}</div>
   <div class="container">
     <div class="item col-md-3">
       <div class="title">记<br />录</div>
@@ -19,9 +19,13 @@
     <div class="item main col-md-7" style="
       border-right: 1.2px solid #66645f;
       border-left: 1.2px solid #66645f;">
-      <form id="add" action="123" method="post" @submit="submit">
-        <input class="text-input" type="text" name="title" v-model="title">
-        <textarea name="content" rows="8" cols="80" v-model="content"></textarea>
+      <form id="add" action="#" method="post" @submit.prevent="submit">
+        <label>
+          <input class="text-input" type="text" name="title" v-model="note.title">
+        </label>
+        <label>
+          <textarea name="content" rows="8" cols="80" v-model="note.content"></textarea>
+        </label>
         <input id="hide" type="submit" style="display: none;" />
       </form>
     </div>
@@ -35,6 +39,7 @@
   </div>
 </div>
 </body>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/vue.min.js"></script>
 <script type="text/javascript" src="/js/add.js"></script>
 </html>

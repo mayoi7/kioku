@@ -1,6 +1,6 @@
 body {
   font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
-  background: #d8e698;
+  background: #e6eae3;
 }
 
 .name {
@@ -15,6 +15,8 @@ a, a:hover, a:active {
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
+  padding: 15px;
+  background: #fbfff7c9;
 }
 
 .side-bar {
@@ -42,7 +44,7 @@ a, a:hover, a:active {
 }
 
 .side-bar li.active {
-  border-left: 2px solid #e6a697;
+  border-left: 2px solid #189bc2e6;;
 }
 
 .side-bar li.sleep {
@@ -57,7 +59,7 @@ a, a:hover, a:active {
 }
 
 .side-bar li:hover {
-  background: #bfcc87;
+  background: #d0ebbc;
 }
 
 .container .show {
