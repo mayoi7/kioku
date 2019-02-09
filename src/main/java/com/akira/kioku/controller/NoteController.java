@@ -56,7 +56,8 @@ public class NoteController {
     }
 
     @PostMapping("/{userId}")
-    public ResultVo saveNote(@PathVariable("userId") Long userId, @RequestBody NoteInfo note) {
+    public ResultVo saveNote(@PathVariable("userId") Long userId, NoteInfo note) {
+        // FIXME: 换行符存储无效
         noteService.saveNote(userId, note);
         return ResultUtil.success();
     }

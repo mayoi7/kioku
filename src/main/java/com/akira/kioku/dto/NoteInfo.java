@@ -1,6 +1,7 @@
 package com.akira.kioku.dto;
 
 import com.akira.kioku.po.Note;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
