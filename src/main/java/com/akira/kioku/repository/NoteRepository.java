@@ -26,7 +26,7 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
      * @return {@link NotePackageable}的集合
      */
     @Query(value = "SELECT note.id, note.title, content, note.gmt_create gmtCreate " +
-            "FROM note, content WHERE note.id = content.nid AND note.uid = 2 " +
+            "FROM note, content WHERE note.id = content.nid AND note.uid = :uid " +
             "ORDER BY note.id DESC", nativeQuery = true)
     Page<NotePackageable> findByUidAsInfo(@Param("uid") Long uid, Pageable pageable);
 }
