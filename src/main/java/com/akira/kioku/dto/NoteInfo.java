@@ -29,6 +29,7 @@ public class NoteInfo {
         this.id = noter.getId();
         this.title = noter.getTitle();
         this.content = noter.getContent();
-        this.date = noter.getGmtCreate().getTime();
+        // 时区问题，减去8个小时
+        this.date = noter.getGmtCreate().getTime() - 28800000;
     }
 }
