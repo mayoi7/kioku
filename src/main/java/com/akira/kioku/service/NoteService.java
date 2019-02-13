@@ -33,4 +33,9 @@ public interface NoteService {
      * @param note {@link NoteInfo}对象
      */
     void saveNote(Long userId, NoteInfo note);
+
+    /**
+     * 统计日记总数
+     */
+    Long countNote();
 }

@@ -47,4 +47,10 @@ public class UserServiceImpl implements UserService {
         user.setRole(UserConstant.USER_ROLE);
         return userRepository.save(user);
     }
+
+    @Override
+    @RequiresRoles({"admin"})
+    public Long countRegisterUser() {
+        return userRepository.count();
+    }
 }

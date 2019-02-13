@@ -24,9 +24,9 @@ let index = {
     data() {
         return {
             website: {  // ajax
-                online: 12544,
-                reg: 35476,
-                note: 85142
+                online: 0,
+                reg: 0,
+                note: 0
             },
         };
     },
@@ -89,156 +89,11 @@ let user = {
     data() {
         return {
             name: '',
-            users: [
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                },
-                {
-                    id: '123',
-                    username: 'aaaa',
-                    role: 10,
-                    noteCount: 52,
-                    regDate: '2018-09-09 15:24:01',
-                    code: '5scf7d'
-                }
-            ],
+            users: [],
             pager: {  // ajax, update 'users' synchronously
-                count: 15,
+                count: 1,
                 crt_page: 1,
-                pages: [1, 2, 3, 4, 5]
+                pages: [1]
             }
         };
     },
@@ -259,12 +114,10 @@ let user = {
                 this.pager.pages = [this.pager.count-4, this.pager.count-3,
                     this.pager.count-2, this.pager.count-1, this.pager.count];
                 this.pager.crt_page = tar;
-                return;
             } else if(tar < crt && arr[0] - (crt - tar) < 1) {
                 // 向前翻 且页码不够的情况
                 this.pager.pages = [1, 2, 3, 4, 5];
                 this.pager.crt_page = tar;
-                return;
             } else {
                 if(this.pager.count - tar < 3) {
                     this.pager.pages = [this.pager.count-4, this.pager.count-3,
@@ -274,9 +127,7 @@ let user = {
                 } else {
                     this.pager.pages = [tar-2, tar-1, tar, tar+1, tar+2];
                 }
-
                 this.pager.crt_page = tar;
-                return;
             }
         },
         go_first_page: function() {

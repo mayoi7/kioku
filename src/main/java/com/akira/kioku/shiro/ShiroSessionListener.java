@@ -43,7 +43,7 @@ public class ShiroSessionListener implements SessionListener {
         sessionCount.decrementAndGet();
     }
     /**
-     * 获取在线人数使用
+     * 获取在线人数
      */
     public AtomicInteger getSessionCount() {
         return sessionCount;

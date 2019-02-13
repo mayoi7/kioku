@@ -29,4 +29,10 @@ public interface UserService {
      * @return 插入后的数据库中的用户记录（主要为了获取插入后的id）
      */
     User registerUser(User user);
+
+    /**
+     * 统计注册的用户数
+     * @return 数据库中用户总数
+     */
+    Long countRegisterUser();
 }

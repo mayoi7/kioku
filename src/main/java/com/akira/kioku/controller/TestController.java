@@ -25,20 +25,8 @@ import java.net.URLEncoder;
 @Slf4j
 public class TestController {
 
-    private final ShiroSessionListener shiroSessionListener;
-
-    @Autowired
-    public TestController(ShiroSessionListener shiroSessionListener) {
-        this.shiroSessionListener = shiroSessionListener;
-    }
-
     @GetMapping("msg")
     public ResultVo getMessage() {
         return ResultUtil.success();
-    }
-
-    @GetMapping("/count")
-    public Integer number(HttpServletResponse resp, HttpSession session){
-        return shiroSessionListener.getSessionCount().get();
     }
 }

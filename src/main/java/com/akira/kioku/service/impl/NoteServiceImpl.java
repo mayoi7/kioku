@@ -69,4 +69,10 @@ public class NoteServiceImpl implements NoteService {
         // 再保存详细内容
         contentRepository.save(new Content(noteGen.getId(), note.getContent()));
     }
+
+    @Override
+    @RequiresRoles({"admin"})
+    public Long countNote() {
+        return noteRepository.count();
+    }
 }
