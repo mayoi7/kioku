@@ -1,6 +1,7 @@
 package com.akira.kioku.config;
 
 import com.akira.kioku.shiro.CustomRealm;
+import com.akira.kioku.shiro.KickoutSessionControlFilter;
 import com.akira.kioku.shiro.ShiroSessionListener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -24,6 +25,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -47,27 +49,33 @@ public class ShiroConfig {
         // 设置无权限时跳转的 url;
         shiroFilterFactoryBean.setUnauthorizedUrl("");
 
+        //自定义拦截器限制并发人数,参考博客
+        LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
+        //限制同一帐号同时在线的个数
+        filtersMap.put("kickout", kickoutSessionControlFilter());
+        shiroFilterFactoryBean.setFilters(filtersMap);
+
         // 设置拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
         // 用户，需要角色权限 “user”且已登陆
-        filterChainDefinitionMap.put("/user/**", "user");
+        filterChainDefinitionMap.put("/user/**", "kickout, user");
         // 管理员，需要角色权限 “admin”且已登录
-        filterChainDefinitionMap.put("/admin/**", "user, authc, roles[admin]");
+        filterChainDefinitionMap.put("/admin/**", "kickout, user, authc, roles[admin]");
 
         // 开放资源路径
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
 
         // 开放登陆及注册接口
-        filterChainDefinitionMap.put("/login/**", "anon");
-        filterChainDefinitionMap.put("/page/register", "anon");
+        filterChainDefinitionMap.put("/login/**", "kickout, anon");
+        filterChainDefinitionMap.put("/page/register", "kickout, anon");
         // 开放测试接口
         // isRemember() || isAuthentication()
          filterChainDefinitionMap.put("/test/**", "anon");
         // 其余接口一律拦截
         // 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-        filterChainDefinitionMap.put("/**", "user");
+        filterChainDefinitionMap.put("/**", "kickout, user");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         log.info("[配置]Shiro拦截器工厂类注入");
@@ -292,6 +300,26 @@ public class ShiroConfig {
 
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         return sessionManager;
+    }
+
+    /**
+     * 并发登录控制
+     * @return
+     */
+    @Bean
+    public KickoutSessionControlFilter kickoutSessionControlFilter(){
+        KickoutSessionControlFilter kickoutSessionControlFilter = new KickoutSessionControlFilter();
+        //用于根据会话ID，获取会话进行踢出操作的；
+        kickoutSessionControlFilter.setSessionManager(sessionManager());
+        //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
+        kickoutSessionControlFilter.setCacheManager(ehCacheManager());
+        //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；
+        kickoutSessionControlFilter.setKickoutAfter(false);
+        //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
+        kickoutSessionControlFilter.setMaxSession(1);
+        //被踢出后重定向到的地址；
+        kickoutSessionControlFilter.setKickoutUrl("/login?kickout=1");
+        return kickoutSessionControlFilter;
     }
 
 }
