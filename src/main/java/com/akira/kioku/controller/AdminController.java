@@ -5,8 +5,15 @@ import com.akira.kioku.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
 
 /**
  * 管理员的一系列操作
@@ -31,4 +38,6 @@ public class AdminController {
     public ModelAndView goAdminPage() {
         return new ModelAndView("admin/admin");
     }
+
+
 }
