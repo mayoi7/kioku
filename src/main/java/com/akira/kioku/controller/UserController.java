@@ -46,7 +46,7 @@ public class UserController {
     @GetMapping("name")
     public ResultVo returnUserName() {
         Subject subject = SecurityUtils.getSubject();
-        if(!subject.isAuthenticated()) {
+        if(!subject.isAuthenticated() && !subject.isRemembered()) {
             // 用户未登陆
             log.warn("[查询]用户未登陆无法查询信息");
             return ResultUtil.error("未登陆的用户");
@@ -61,7 +61,7 @@ public class UserController {
     @GetMapping("info")
     public ResultVo returnUserInfo() {
         Subject subject = SecurityUtils.getSubject();
-        if(!subject.isAuthenticated()) {
+        if(!subject.isAuthenticated() && !subject.isRemembered()) {
             // 用户未登陆
             log.warn("[查询]用户未登陆无法查询信息");
             return ResultUtil.error("未登陆的用户");
