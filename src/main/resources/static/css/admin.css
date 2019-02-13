@@ -1,0 +1,132 @@
+body {
+    font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+    background-color: #98623c;
+}
+
+.container {
+    display: flex;
+    margin: 20px auto;
+    height: 600px;
+    background-color: #ffffff8f;
+}
+
+.side-bar {
+    margin: 19px auto;
+    border-right: 2px solid #0000004d;
+    text-align: center;
+}
+
+.side-bar ul {
+    margin: 10px 15px;
+    padding: 10px;
+}
+
+.side-bar ul li {
+    height: 40px;
+    padding: 8px;
+}
+
+.side-bar li a {
+    color: #000000d1;
+    font-size: 18px;
+    font-weight: bold;
+
+    -webkit-transition: color .2s;
+    -o-transition: color .2s;
+    transition: color .2s;
+}
+
+.side-bar li a:hover {
+    color: #fff;
+}
+
+.side-bar li.active a {
+    color: #fff;
+}
+
+.content {
+    margin: 15px auto;
+    padding: 10px;
+}
+
+/* 以下是index模块 */
+.index ul {
+    padding: 10px;
+    text-align: center;
+}
+
+.index li {
+    margin: 20px auto;
+    height: 50px;
+    padding: 10px;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.index li div {
+    display: inline-block;
+}
+
+.index li .data {
+    margin-left: 20px;
+}
+
+/* 以下是user模块 */
+.search-bar input {
+    display: inline-block;
+    margin: 15px 20px;
+    width: 310px;
+    border-bottom: 2px solid #2a282f7a;
+    border-radius: 3px;
+}
+
+span.role {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* 以下是role模块 */
+table.search-result thead th {
+    border-top: none !important;
+}
+
+.role .option .title {
+    width: 164px;
+    margin: 25px auto;
+    text-align: center;
+    font-size: 29px;
+    font-weight: 600;
+}
+
+.role .opt-list {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    margin: 20px 10px;
+    padding: 0px;
+    justify-content: center;
+}
+
+.role .opt-list li {
+    width: 116px;
+    margin: 36px 42px;
+    font-size: 27px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.role .opt-list li hr {
+    margin-top: 5px;
+}
+
+.role .opt-list a {
+    color: #0000004f;
+
+    -webkit-transition: color .15s;
+    -o-transition: color .15s;
+    transition: color .15s;
+}
+
+.role .opt-list a:hover {
+    color: #000000b5;
+}

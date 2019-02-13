@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>admin</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/master.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div id="app">
+    <div class="info">
+        <div class="name">Akira_Kuroba</div>
+    </div>
+    <div class="container">
+        <div class="col-md-2 side-bar">
+            <ul>
+                <li :class="{ active: current == 1 }" @click="select(1)"><router-link to="/">网站状态</router-link></li>
+                <li :class="{ active: current == 2 }" @click="select(2)"><router-link to="/user">用户信息</router-link></li>
+                <li :class="{ active: current == 3 }" @click="select(3)"><router-link to="/role">用户管理</router-link></li>
+                <li :class="{ active: current == 4 }" @click="select(4)"><router-link to="/manage">网站管理</router-link></li>
+            </ul>
+        </div>
+        <div class="col-md-10 content">
+            <transition>
+                <router-view></router-view>
+            </transition>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript" src="/js/vue-router.min.js"></script>
+<script type="text/javascript" src="/js/admin.js"></script>
+</html>

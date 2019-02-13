@@ -27,13 +27,13 @@ public class BaseController {
         return "login/register";
     }
 
-    @RequiresRoles("user")
+    @RequiresRoles({"user"})
     @RequestMapping("page/browse")
     public String goBrowsePage() {
         return "option/browse";
     }
 
-    @RequiresRoles("user")
+    @RequiresRoles({"user"})
     @RequestMapping("page/add")
     public String goAddPage() {
         return "option/add";

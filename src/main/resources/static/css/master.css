@@ -88,11 +88,11 @@ input {
 }
 
 .text-input::-webkit-input-placeholder {
-    /* placeholder颜色  */
-    /* color: #aab2bd; */
-    /* placeholder字体大小  */
-    font-size: 15px;
-    font-weight: 800;
+  /* placeholder颜色  */
+  /* color: #aab2bd; */
+  /* placeholder字体大小  */
+  font-size: 15px;
+  font-weight: 800;
 }
 
 /* 形如div的button */
@@ -113,4 +113,77 @@ button {
 
 li {
   list-style-type: none;
+}
+
+table.beauty-table {
+  display: block;
+  width: 100%;
+  height: 320px;
+
+  overflow-y: auto;
+}
+
+table thead th {
+  font-size: 17px;
+}
+
+table thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout:fixed;
+  text-align: center;
+}
+
+table tbody tr {
+  /* font-family: Museo Slab,helvetica, */
+  font-family: "Merriweather", Georgia, serif;
+}
+
+table.beauty-table::-webkit-scrollbar {
+  display: none;
+}
+
+table.beauty-table tbody {
+  border-top: none;
+}
+
+table th,td {
+  border: 1px solid #00000059 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+span.locked {
+  color: #f10606d1;
+}
+
+span.normal {
+  color: #0ea2d1d1;
+}
+
+span.admin {
+  color: #03bc1cd1;
+}
+
+span.sp-admin {
+  color: #d914b6d1;
+}
+/* 分页 */
+.pagination {
+  justify-content: center;
+  align-items: center
+}
+
+.pagination li {
+  margin: 25px 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.pagination li a {
+  color: #000;
+}
+
+.pagination li a.active {
+  color: #fff;
 }
