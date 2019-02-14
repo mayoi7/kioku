@@ -81,7 +81,7 @@ let user = {
       <li><a href="javascript:;" @click="go_first_page">首页</a></li>
       <li v-for="num in pager.pages">
         <a href="javascript:;"
-        v-bind:class="{active: pager.crt_page == num}" @click="switch_page(num)">{{num}}</a>
+        v-bind:class="{active: pager.currentPage == num}" @click="switch_page(num)">{{num}}</a>
       </li>
       <li><a href="javascript:;" @click="go_last_page">尾页</a></li>
   </ul>
@@ -92,7 +92,7 @@ let user = {
             users: [],
             pager: {  // ajax, update 'users' synchronously
                 count: 1,
-                crt_page: 1,
+                currentPage: 1,
                 pages: [1]
             }
         };
@@ -102,10 +102,10 @@ let user = {
             /* 通过ajax获取新页内容，然后修改users数据 */
             // ...
             let arr = this.pager.pages;
-            let crt = this.pager.crt_page;
+            let crt = this.pager.currentPage;
 
             if(arr.length < 5 || tar === arr[2]) {
-                this.pager.crt_page = tar;
+                this.pager.currentPage = tar;
                 return;
             }
 
@@ -113,11 +113,11 @@ let user = {
                 // 向后翻 且页码不够的情况
                 this.pager.pages = [this.pager.count-4, this.pager.count-3,
                     this.pager.count-2, this.pager.count-1, this.pager.count];
-                this.pager.crt_page = tar;
+                this.pager.currentPage = tar;
             } else if(tar < crt && arr[0] - (crt - tar) < 1) {
                 // 向前翻 且页码不够的情况
                 this.pager.pages = [1, 2, 3, 4, 5];
-                this.pager.crt_page = tar;
+                this.pager.currentPage = tar;
             } else {
                 if(this.pager.count - tar < 3) {
                     this.pager.pages = [this.pager.count-4, this.pager.count-3,
@@ -127,7 +127,7 @@ let user = {
                 } else {
                     this.pager.pages = [tar-2, tar-1, tar, tar+1, tar+2];
                 }
-                this.pager.crt_page = tar;
+                this.pager.currentPage = tar;
             }
         },
         go_first_page: function() {
@@ -137,7 +137,7 @@ let user = {
             if(this.pager.count > 5) {
                 this.pager.pages = [1, 2, 3, 4, 5];
             }
-            this.pager.crt_page = 1;
+            this.pager.currentPage = 1;
         },
         go_last_page: function() {
             /* 通过ajax获取新页内容，然后修改users数据 */
@@ -147,7 +147,7 @@ let user = {
                 this.pager.pages = [this.pager.count-4, this.pager.count-3,
                     this.pager.count-2, this.pager.count-1, this.pager.count];
             }
-            this.pager.crt_page = this.pager.count;
+            this.pager.currentPage = this.pager.count;
         }
     },
     mounted() {
