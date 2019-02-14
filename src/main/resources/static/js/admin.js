@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var crr = 1;
+let crr = 1;
 
 let index = {
     template: `
@@ -31,6 +31,26 @@ let index = {
         };
     },
     mounted() {
+        // 获取在线人数
+        $.get("/admin/count/online", (data) => {
+            if(data.code === 0) {
+                this.$data.website.online = data.data;
+            }
+        });
+
+        // 获取注册人数(总用户数)
+        $.get("/admin/count/user", (data) => {
+            if(data.code === 0) {
+                this.$data.website.reg = data.data;
+            }
+        });
+
+        // 获取笔记总数
+        $.get("/admin/count/note", (data) => {
+            if(data.code === 0) {
+                this.$data.website.note = data.data;
+            }
+        });
         crr = 1;
     }
 };
@@ -242,155 +262,7 @@ var $app = new Vue({
     el: '#app',
     data: function() {
         return {
-            current: 1,
-            users:  // ajax
-                [
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    },
-                    {
-                        id: '123',
-                        username: 'aaaa',
-                        role: 10,
-                        noteCount: 52,
-                        regDate: '2018-09-09 15:24:01',
-                        code: '5scf7d'
-                    }
-                ],
-
+            current: 1
         };
     },
     methods: {
