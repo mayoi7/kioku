@@ -62,12 +62,6 @@ public class UserServiceImpl implements UserService {
 
     @RequiresRoles({"admin"})
     @Override
-    public Long countRegisterUser() {
-        return userRepository.count();
-    }
-
-    @RequiresRoles({"admin"})
-    @Override
     public List<UserDetail> listAllDetailInPage(Integer page) {
         Pageable pageable = PageRequest.of(page, UserConstant.PAGE_NUM);
 
@@ -85,5 +79,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return details;
+    }
+
+    @RequiresRoles({"admin"})
+    @Override
+    public Long countUser() {
+        return userRepository.count();
     }
 }

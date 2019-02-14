@@ -34,15 +34,15 @@ public interface UserService {
     User registerUser(User user);
 
     /**
-     * 统计注册的用户数
-     * @return 数据库中用户总数
-     */
-    Long countRegisterUser();
-
-    /**
      * 返回指定页号的用户详细信息数据列表
      * @param page 页码
      * @return {@link UserDetail}的集合
      */
     List<UserDetail> listAllDetailInPage(Integer page);
+
+    /**
+     * 统计用户人数
+     * @return 所有注册用户总数
+     */
+    Long countUser();
 }

@@ -17,4 +17,7 @@ public class UserConstant {
 
     /** 查询用户时，每页显示的用户记录的数量 */
     public static final int PAGE_NUM = 6;
+
+    /** 每页显示的页码数量最大值 */
+    public static final int MAX_PAGE_NUM_PRE_PAGE = 5;
 }
