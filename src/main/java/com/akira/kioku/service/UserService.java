@@ -1,6 +1,9 @@
 package com.akira.kioku.service;
 
+import com.akira.kioku.dto.UserDetail;
 import com.akira.kioku.po.User;
+
+import java.util.List;
 
 /**
  * @author Kripath
@@ -35,4 +38,11 @@ public interface UserService {
      * @return 数据库中用户总数
      */
     Long countRegisterUser();
+
+    /**
+     * 返回指定页号的用户详细信息数据列表
+     * @param page 页码
+     * @return {@link UserDetail}的集合
+     */
+    List<UserDetail> listAllDetailInPage(Integer page);
 }

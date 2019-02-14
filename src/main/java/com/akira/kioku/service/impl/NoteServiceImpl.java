@@ -75,4 +75,9 @@ public class NoteServiceImpl implements NoteService {
     public Long countNote() {
         return noteRepository.count();
     }
+
+    @Override
+    public Long countNoteByUid(Long uid) {
+        return noteRepository.countByUid(uid);
+    }
 }

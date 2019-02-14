@@ -14,4 +14,7 @@ public class UserConstant {
     public static final int ADMIN_ROLE = 12;
 
     public static final int SUPER_ADMIN_ROLE = 13;
+
+    /** 查询用户时，每页显示的用户记录的数量 */
+    public static final int PAGE_NUM = 6;
 }

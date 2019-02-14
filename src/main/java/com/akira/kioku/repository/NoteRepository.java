@@ -29,4 +29,11 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
             "FROM note, content WHERE note.id = content.nid AND note.uid = :uid " +
             "ORDER BY note.id DESC", nativeQuery = true)
     Page<NotePackageable> findByUidAsInfo(@Param("uid") Long uid, Pageable pageable);
+
+    /**
+     * 统计某用户创建的日记总数
+     * @param uid 用户id
+     * @return 结果总数
+     */
+    Long countByUid(Long uid);
 }

@@ -2,6 +2,7 @@ package com.akira.kioku.utils;
 
 import com.akira.kioku.dto.NoteInfo;
 import com.akira.kioku.dto.NotePackageable;
+import com.akira.kioku.dto.UserDetail;
 import com.akira.kioku.dto.UserInfo;
 import com.akira.kioku.enums.RoleEnum;
 import com.akira.kioku.po.User;
@@ -68,5 +69,17 @@ public class EntityUtil {
             list.add(new NoteInfo(note));
         }
         return list;
+    }
+
+    /**
+     * 将数据封装成{@link UserDetail}对象
+     * @param user 用户po类，其中password和gmt_modified对象不需要
+     * @param noteCount 用户创建的日记总数
+     * @return {@link UserDetail}
+     */
+    public static UserDetail packageToUserDetail(User user, Long noteCount) {
+        UserDetail detail = new UserDetail(user);
+        detail.setNoteCount(noteCount);
+        return detail;
     }
 }

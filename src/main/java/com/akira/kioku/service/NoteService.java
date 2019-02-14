@@ -36,6 +36,14 @@ public interface NoteService {
 
     /**
      * 统计日记总数
+     * @return 日记总数
      */
     Long countNote();
+
+    /**
+     * 统计某用户的日记总数
+     * @param uid 用户id
+     * @return 用户创建的日记总数
+     */
+    Long countNoteByUid(Long uid);
 }
