@@ -152,4 +152,18 @@ public class AdminController {
         }
         return ResultUtil.error("无该用户");
     }
+
+    /**
+     * 重置一个用户
+     * @param username 被重置的用户名
+     * @return 是否成功的标识
+     */
+    @PostMapping("/reset/{username}")
+    public ResultVo resetUser(@PathVariable("username") String username) {
+        log.info("[锁定]请求锁定用户{}", username);
+        if(userService.resetByUsername(username)) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error("无该用户");
+    }
 }

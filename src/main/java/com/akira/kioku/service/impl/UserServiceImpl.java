@@ -119,6 +119,20 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         user.setRole(UserConstant.LOCKED_ROLE);
+        userRepository.saveAndFlush(user);
+        return true;
+    }
+
+    @Override
+    public boolean resetByUsername(String username) {
+        // 先查询是否有该用户
+        User user = userRepository.findByUsername(username);
+        if(user == null) {
+            log.info("[重置]重置用户{}失败，数据库中无记录", username);
+            return false;
+        }
+        user.setRole(UserConstant.USER_ROLE);
+        userRepository.saveAndFlush(user);
         return true;
     }
 }

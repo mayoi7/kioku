@@ -66,4 +66,11 @@ public interface UserService {
      * @return true表示锁定成功，false表示锁定失败(数据库中没有该用户)
      */
     boolean lockByUsername(String username);
+
+    /**
+     * 重置用户(将权限恢复置默认)
+     * @param username 要重置用户的用户名
+     * @return false表示重置失败(数据库中没有该用户)
+     */
+    boolean resetByUsername(String username);
 }
