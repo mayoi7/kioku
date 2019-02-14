@@ -15,8 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         return user.getRole();
     }
 
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public User registerUser(User user) {
         // 设置权限为普通用户
@@ -93,5 +93,32 @@ public class UserServiceImpl implements UserService {
 
         return EntityUtil.packageToUserDetail(user,
                 noteService.countNoteByUid(user.getId()));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @RequiresRoles({"admin"})
+    @Override
+    public boolean deleteByUsername(String username) {
+        // 先查询是否有该用户
+        User user = userRepository.findByUsername(username);
+        if(user == null) {
+            log.info("[删除]删除用户{}失败，数据库中无记录", username);
+            return false;
+        }
+        userRepository.delete(user);
+        log.info("[删除]删除用户{}成功", username);
+        return true;
+    }
+
+    @Override
+    public boolean lockByUsername(String username) {
+        // 先查询是否有该用户
+        User user = userRepository.findByUsername(username);
+        if(user == null) {
+            log.info("[锁定]锁定用户{}失败，数据库中无记录", username);
+            return false;
+        }
+        user.setRole(UserConstant.LOCKED_ROLE);
+        return true;
     }
 }

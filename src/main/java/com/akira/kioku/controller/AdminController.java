@@ -124,4 +124,32 @@ public class AdminController {
         List<UserDetail> details = userService.listAllDetailInPage(page-1);
         return ResultUtil.success(details);
     }
+
+    /**
+     * 删除用户
+     * @param username 要删除用户的用户名
+     * @return 删除是否成功的标识
+     */
+    @DeleteMapping("/user/{username}")
+    public ResultVo deleteUser(@PathVariable("username") String username) {
+        log.info("[删除]请求删除用户{}", username);
+        if(userService.deleteByUsername(username)) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error("无该用户");
+    }
+
+    /**
+     * 锁定一个用户(无法进行任何的写入或更新操作)
+     * @param username 被锁定用户的用户名
+     * @return 是否成功的标识
+     */
+    @PostMapping("/lock/{username}")
+    public ResultVo lockUser(@PathVariable("username")String username) {
+        log.info("[锁定]请求锁定用户{}", username);
+        if(userService.lockByUsername(username)) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error("无该用户");
+    }
 }

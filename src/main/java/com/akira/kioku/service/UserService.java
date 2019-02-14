@@ -52,4 +52,18 @@ public interface UserService {
      * @return {@link UserDetail}对象
      */
     UserDetail queryUserDetailByUsername(String username);
+
+    /**
+     * 删除用户
+     * @param username 要删除用户的用户名
+     * @return true表示删除成功，false表示删除失败(数据库中没有该用户)
+     */
+    boolean deleteByUsername(String username);
+
+    /**
+     * 锁定用户
+     * @param username 要锁定用户的用户名
+     * @return true表示锁定成功，false表示锁定失败(数据库中没有该用户)
+     */
+    boolean lockByUsername(String username);
 }
