@@ -151,6 +151,7 @@ table th,td {
   border: 1px solid #00000059 !important;
   border-left: none !important;
   border-right: none !important;
+  vertical-align: inherit !important;
 }
 
 span.locked {

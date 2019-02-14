@@ -45,4 +45,11 @@ public interface UserService {
      * @return 所有注册用户总数
      */
     Long countUser();
+
+    /**
+     * 通过用户名查询某用户的详细信息
+     * @param username 用户名
+     * @return {@link UserDetail}对象
+     */
+    UserDetail queryUserDetailByUsername(String username);
 }

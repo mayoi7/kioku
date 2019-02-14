@@ -58,6 +58,9 @@ public class ShiroConfig {
         // 设置拦截器
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
+        // 接口开放
+        filterChainDefinitionMap.put("/api/**", "anon");
+
         // 用户，需要角色权限 “user”且已登陆
         filterChainDefinitionMap.put("/user/**", "kickout, user");
         // 管理员，需要角色权限 “admin”且已登录

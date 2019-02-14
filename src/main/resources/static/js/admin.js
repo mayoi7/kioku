@@ -61,7 +61,7 @@ let user = {
     <div class="search-bar" style="text-align: center; margin: 12px auto;">
       <input type="text" class="text-input" name="username" v-model="name"
         autocomplete="off" placeholder="查询的用户名这里输入">
-      <button class="search-btn div-btn">
+      <button class="search-btn div-btn" @click="queryUser">
           <svg fill="currentColor" width="30" height="30" version="1.1" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
             <g><path d="M990,919L724.5,652.1c51.1-67.3,81.4-151.2,
               81.4-242.2c0-220.5-178.5-400-397.9-400C188.5,10,10,189.4,10,410c0,
@@ -92,7 +92,7 @@ let user = {
               <span class="role sp-admin" v-if="user.role == 13">超级管理员</span>
             </td>
             <td>{{user.noteCount}}</td>
-            <td>{{user.regDate}}</td>
+            <td style="font-size: 15px; padding: 0;">{{user.regDate}}</td>
             <td>{{user.code}}</td>
           </tr>
         </tbody>
@@ -118,6 +118,17 @@ let user = {
         };
     },
     methods: {
+        queryUser() {
+            if(this.$data.name === "") {
+                alert("不能输入空值");
+                return;
+            }
+            $.get("api/user/" + this.$data.name, (data) => {
+                if(data.code === 0) {
+                    this.$data.users = [data.data];
+                }
+            });
+        },
         switch_page: function(tar) {
             /* 通过ajax获取新页内容，然后修改users数据 */
             // ...
@@ -171,6 +182,17 @@ let user = {
         }
     },
     mounted() {
+        $.get("/admin/query/user/1", (data) => {
+            if(data.code === 0) {
+                this.$data.users = data.data;
+            }
+        });
+
+        $.get("/admin/count/user/page", (data) => {
+            if(data.code === 0) {
+                this.$data.pager = data.data;
+            }
+        });
         crr = 2;
     }
 };
@@ -181,7 +203,7 @@ let role = {
     <div class="search-bar" style="text-align: center; margin: 12px auto;">
       <input type="text" class="text-input" name="name" v-model="name"
       autocomplete="off" placeholder="查询的用户名在这里输入">
-      <button class="search-btn div-btn">
+      <button class="search-btn div-btn" @click="queryUser">
           <svg fill="currentColor" width="30" height="30" version="1.1" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
             <g><path d="M990,919L724.5,652.1c51.1-67.3,81.4-151.2,
               81.4-242.2c0-220.5-178.5-400-397.9-400C188.5,10,10,189.4,10,410c0,
@@ -213,7 +235,7 @@ let role = {
               <span class="role sp-admin" v-if="user.role == 13">超级管理员</span>
             </td>
             <td>{{user.noteCount}}</td>
-            <td>{{user.regDate}}</td>
+            <td style="font-size: 15px; padding: 0;">{{user.regDate}}</td>
             <td>{{user.code}}</td>
           </tr>
         </tbody>
@@ -232,8 +254,21 @@ let role = {
     data() {
         return {
             name: '',
-            user: []
+            user: {}
         };
+    },
+    methods: {
+        queryUser() {
+            if(this.$data.name === "") {
+                alert("不能输入空值");
+                return;
+            }
+            $.get("api/user/" + this.$data.name, (data) => {
+                if(data.code === 0) {
+                    this.$data.user = data.data;
+                }
+            });
+        }
     },
     mounted() {
         crr = 3;

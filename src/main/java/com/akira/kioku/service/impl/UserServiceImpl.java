@@ -86,4 +86,12 @@ public class UserServiceImpl implements UserService {
     public Long countUser() {
         return userRepository.count();
     }
+
+    @Override
+    public UserDetail queryUserDetailByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+
+        return EntityUtil.packageToUserDetail(user,
+                noteService.countNoteByUid(user.getId()));
+    }
 }
