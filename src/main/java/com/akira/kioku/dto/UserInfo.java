@@ -18,5 +18,5 @@ public class UserInfo {
 
     private String username;
 
-    private String role;
+    private Integer role;
 }

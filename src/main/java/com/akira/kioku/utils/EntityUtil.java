@@ -47,15 +47,7 @@ public class EntityUtil {
             return null;
         }
 
-        // 查询权限码对应的权限
-        RoleEnum roleEnum = EnumUtil.getByCode(user.getRole(), RoleEnum.class);
-        String msg = null;
-        if (roleEnum != null) {
-            msg = roleEnum.getMsg();
-        } else {
-            log.warn("[权限]用户{}权限码{}异常", user.getUsername(), user.getRole());
-        }
-        return new UserInfo(user.getId(), user.getUsername(), msg);
+        return new UserInfo(user.getId(), user.getUsername(), user.getRole());
     }
 
     /**
