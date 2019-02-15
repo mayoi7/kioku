@@ -51,7 +51,7 @@ public class NoteController {
     @GetMapping("all/{userId}")
     public ResultVo returnAll(@PathVariable("userId") Long userId) {
         List<NoteInfo> notes = noteService.listAll(userId);
-        log.info("[日记]获取id为{}用户的所有记录", userId);
+        log.info("[日记]获取 uid-{} 用户的所有记录", userId);
         return ResultUtil.success(notes);
     }
 

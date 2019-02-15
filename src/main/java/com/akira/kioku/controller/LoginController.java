@@ -66,21 +66,21 @@ public class LoginController {
             try {
                 subject.login(token);
             } catch (UnknownAccountException uae) {
-                log.warn("[登陆]用户名错误，用户名为{}", username);
+                log.warn("[登陆] 用户名错误，用户名为{}", username);
                 return ResultUtil.error(1, "用户名错误");
             } catch (IncorrectCredentialsException ice) {
-                log.warn("[登陆]用户{}密码错误", username, password);
+                log.warn("[登陆] 用户{}密码错误", username, password);
                 return ResultUtil.error(2, "密码错误");
             } catch (LockedAccountException lae) {
-                log.warn("[登陆]用户{}被锁定", username);
+                log.warn("[登陆] 用户{}被锁定", username);
                 return ResultUtil.error(3, "账号被锁定");
             } catch (AuthenticationException ae) {
-                log.warn("[登陆]用户{}发生未知异常", username);
+                log.warn("[登陆] 用户{}发生未知异常", username);
                 return ResultUtil.error(4, "未知认证异常");
             }
         }
 
-        log.info("[登陆]用户{}正常登陆", username);
+        log.info("[登陆] 用户-{} 正常登陆", username);
         return ResultUtil.success();
     }
 
@@ -154,7 +154,7 @@ public class LoginController {
         }
         codeService.setUsed(code, record.getId());
 
-        log.info("[注册]用户{}注册账号成功", username);
+        log.info("[注册] 用户-{} 注册账号成功", username);
 
         // 自动执行登陆
         Subject subject = SecurityUtils.getSubject();
@@ -166,7 +166,7 @@ public class LoginController {
             subject.login(token);
         } catch (Exception e) {
             // 不可能发生用户名或密码错误以及被锁定等异常，但可能会有其他异常
-            log.error("[注册]用户{}注册完毕自动登陆异常", username);
+            log.error("[注册] 用户-{} 注册完毕自动登陆异常", username);
             return ResultUtil.error(2, "自动登陆失败");
         }
 

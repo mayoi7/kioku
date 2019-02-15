@@ -48,7 +48,7 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated() && !subject.isRemembered()) {
             // 用户未登陆
-            log.warn("[查询]用户未登陆无法查询信息");
+            log.warn("[查询] 用户未登陆无法查询信息");
             return ResultUtil.error("未登陆的用户");
         }
         return ResultUtil.success(subject.getPrincipal());
@@ -63,13 +63,13 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
         if(!subject.isAuthenticated() && !subject.isRemembered()) {
             // 用户未登陆
-            log.warn("[查询]用户未登陆无法查询信息");
+            log.warn("[查询] 用户未登陆无法查询信息");
             return ResultUtil.error("未登陆的用户");
         }
         String username = subject.getPrincipal().toString();
         User user = userService.findByUsername(username);
         if(user == null) {
-            log.warn("[查询]shiro保存的用户名{}有误，请核查配置", username);
+            log.warn("[查询] shiro保存的 用户名-{} 有误，请核查配置", username);
         }
         return ResultUtil.success(EntityUtil.packageUserAsUserInfo(user));
     }

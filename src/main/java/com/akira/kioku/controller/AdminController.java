@@ -94,7 +94,7 @@ public class AdminController {
     public ResultVo returnUserPager() {
         Long count = userService.countUser();
         if(count == null) {
-            log.warn("[统计]user表中无记录");
+            log.warn("[统计] user表中无记录");
             return ResultUtil.error();
         }
         // 总页码数(初始页码为1)
@@ -118,7 +118,7 @@ public class AdminController {
     @GetMapping("query/user/{page}")
     public ResultVo listAllUserDetails(@PathVariable("page")Integer page) {
         if(page < 1) {
-            log.warn("[查询]不合法的参数: page={}", page);
+            log.warn("[查询] 不合法的参数: page={}", page);
             return ResultUtil.error("不合法的页码");
         }
         List<UserDetail> details = userService.listAllDetailInPage(page-1);
@@ -132,12 +132,12 @@ public class AdminController {
      */
     @DeleteMapping("/user/{username}")
     public ResultVo deleteUser(@PathVariable("username") String username) {
-        log.info("[删除]请求删除用户{}", username);
+        log.info("[删除] 请求删除用户{}", username);
         if(userService.deleteByUsername(username)) {
-            log.info("[删除]删除用户{}成功", username);
+            log.info("[删除] 删除用户{}成功", username);
             return ResultUtil.success();
         }
-        log.warn("[删除]删除用户{}失败，数据库中无记录", username);
+        log.warn("[删除] 删除用户{}失败，数据库中无记录", username);
         return ResultUtil.error("无该用户");
     }
 
@@ -148,12 +148,12 @@ public class AdminController {
      */
     @PostMapping("/lock/{username}")
     public ResultVo lockUser(@PathVariable("username")String username) {
-        log.info("[锁定]请求锁定用户{}", username);
+        log.info("[锁定] 请求锁定用户{}", username);
         if(userService.lockByUsername(username)) {
-            log.info("[锁定]锁定用户{}成功", username);
+            log.info("[锁定] 锁定用户{}成功", username);
             return ResultUtil.success();
         }
-        log.warn("[锁定]锁定用户{}失败，数据库中无记录", username);
+        log.warn("[锁定] 锁定用户{}失败，数据库中无记录", username);
         return ResultUtil.error("无该用户");
     }
 
@@ -164,9 +164,9 @@ public class AdminController {
      */
     @PostMapping("/reset/{username}")
     public ResultVo resetUser(@PathVariable("username") String username) {
-        log.info("[重置]请求重置用户{}", username);
+        log.info("[重置] 请求重置用户{}", username);
         if(userService.resetByUsername(username)) {
-            log.info("[重置]重置用户{}成功", username);
+            log.info("[重置] 重置用户{}成功", username);
             return ResultUtil.success();
         }
         log.warn("[重置]重置用户{}失败，数据库中无记录", username);
