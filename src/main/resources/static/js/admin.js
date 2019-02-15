@@ -244,10 +244,10 @@ let role = {
       <div class="title">操作列表<hr></div>
     </div>
     <ul class="opt-list">
-      <li><a href="javascript:;">销号<hr></a></li>
-      <li><a href="javascript:;">锁定<hr></a></li>
-      <li><a href="javascript:;">恢复<hr></a></li>
-      <li><a href="javascript:;">授权<hr></a></li>
+      <li><a href="javascript:;" @click="deleteUser">销号<hr></a></li>
+      <li><a href="javascript:;" @click="lockUser">锁定<hr></a></li>
+      <li><a href="javascript:;" @click="resetUser">重置<hr></a></li>
+      <li><a href="javascript:;" @click="authorizeUser">授权<hr></a></li>
     </ul>
   </div>
   `,
@@ -266,6 +266,42 @@ let role = {
             $.get("api/user/" + this.$data.name, (data) => {
                 if(data.code === 0) {
                     this.$data.user = data.data;
+                }
+            });
+        },
+        deleteUser() {
+            $.post("/admin/user/" + this.$data.name, {_method: "delete"}, (data) => {
+                if(data.code === 0) {
+                    this.$router.go(0);
+                } else {
+                    alert("删除失败：" + data.msg);
+                }
+            });
+        },
+        lockUser() {
+            $.post("/admin/lock/" + this.$data.name, (data) => {
+                if(data.code === 0) {
+                    this.$router.go(0);
+                } else {
+                    alert("锁定失败：" + data.msg);
+                }
+            });
+        },
+        resetUser() {
+            $.post("/admin/reset/" + this.$data.name, (data) => {
+                if(data.code === 0) {
+                    this.$router.go(0);
+                } else {
+                    alert("重置失败：" + data.msg);
+                }
+            });
+        },
+        authorizeUser() {
+            $.post("/admin/authorize/" + this.$data.name, (data) => {
+                if(data.code === 0) {
+                    this.$router.go(0);
+                } else {
+                    alert("授权失败：" + data.msg);
                 }
             });
         }

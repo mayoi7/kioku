@@ -73,4 +73,11 @@ public interface UserService {
      * @return false表示重置失败(数据库中没有该用户)
      */
     boolean resetByUsername(String username);
+
+    /**
+     * 授权用户(将用户授为普通管理员)
+     * @param username 被授权用户的用户名
+     * @return false表示授权失败(数据库中没有该用户)
+     */
+    boolean authorizeByUsername(String username);
 }

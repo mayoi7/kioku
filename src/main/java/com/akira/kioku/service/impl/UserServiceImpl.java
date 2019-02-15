@@ -122,6 +122,13 @@ public class UserServiceImpl implements UserService {
         return updateUserRole(username, UserConstant.USER_ROLE);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @RequiresRoles({"sp_admin"})
+    @Override
+    public boolean authorizeByUsername(String username) {
+        return updateUserRole(username, UserConstant.ADMIN_ROLE);
+    }
+
     @RequiresRoles({"admin"})
     private boolean updateUserRole(String username, Integer role) {
         // 先查询是否有该用户
