@@ -1,6 +1,5 @@
 package com.akira.kioku.service.impl;
 
-import com.akira.kioku.constant.NoteConstant;
 import com.akira.kioku.constant.UserConstant;
 import com.akira.kioku.dto.UserDetail;
 import com.akira.kioku.po.User;
@@ -102,36 +101,35 @@ public class UserServiceImpl implements UserService {
         // 先查询是否有该用户
         User user = userRepository.findByUsername(username);
         if(user == null) {
-            log.info("[删除]删除用户{}失败，数据库中无记录", username);
+
             return false;
         }
         userRepository.delete(user);
-        log.info("[删除]删除用户{}成功", username);
         return true;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @RequiresRoles({"admin"})
     @Override
     public boolean lockByUsername(String username) {
-        // 先查询是否有该用户
-        User user = userRepository.findByUsername(username);
-        if(user == null) {
-            log.info("[锁定]锁定用户{}失败，数据库中无记录", username);
-            return false;
-        }
-        user.setRole(UserConstant.LOCKED_ROLE);
-        userRepository.saveAndFlush(user);
-        return true;
+        return updateUserRole(username, UserConstant.LOCKED_ROLE);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @RequiresRoles({"admin"})
     @Override
     public boolean resetByUsername(String username) {
+        return updateUserRole(username, UserConstant.USER_ROLE);
+    }
+
+    @RequiresRoles({"admin"})
+    private boolean updateUserRole(String username, Integer role) {
         // 先查询是否有该用户
         User user = userRepository.findByUsername(username);
         if(user == null) {
-            log.info("[重置]重置用户{}失败，数据库中无记录", username);
             return false;
         }
-        user.setRole(UserConstant.USER_ROLE);
+        user.setRole(role);
         userRepository.saveAndFlush(user);
         return true;
     }
