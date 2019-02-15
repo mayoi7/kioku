@@ -134,8 +134,10 @@ public class AdminController {
     public ResultVo deleteUser(@PathVariable("username") String username) {
         log.info("[删除]请求删除用户{}", username);
         if(userService.deleteByUsername(username)) {
+            log.info("[删除]删除用户{}成功", username);
             return ResultUtil.success();
         }
+        log.warn("[删除]删除用户{}失败，数据库中无记录", username);
         return ResultUtil.error("无该用户");
     }
 
@@ -148,8 +150,10 @@ public class AdminController {
     public ResultVo lockUser(@PathVariable("username")String username) {
         log.info("[锁定]请求锁定用户{}", username);
         if(userService.lockByUsername(username)) {
+            log.info("[锁定]锁定用户{}成功", username);
             return ResultUtil.success();
         }
+        log.warn("[锁定]锁定用户{}失败，数据库中无记录", username);
         return ResultUtil.error("无该用户");
     }
 
@@ -160,10 +164,14 @@ public class AdminController {
      */
     @PostMapping("/reset/{username}")
     public ResultVo resetUser(@PathVariable("username") String username) {
-        log.info("[锁定]请求锁定用户{}", username);
+        log.info("[重置]请求重置用户{}", username);
         if(userService.resetByUsername(username)) {
+            log.info("[重置]重置用户{}成功", username);
             return ResultUtil.success();
         }
+        log.warn("[重置]重置用户{}失败，数据库中无记录", username);
         return ResultUtil.error("无该用户");
     }
+
+
 }
