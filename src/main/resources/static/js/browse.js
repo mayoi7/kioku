@@ -42,13 +42,17 @@ var $app = new Vue({
 
     return {
         user : {},
+        isShow: false,
         notes: {},
         current: {}
     };
   },
   methods: {
-    tabChange: function(i) {
-      this.$data.current = this.$data.notes[i];
-    }
+      switchBar: function(e) {
+          this.isShow = !this.isShow;
+      },
+      tabChange: function(i) {
+          this.$data.current = this.$data.notes[i];
+      }
   }
 });

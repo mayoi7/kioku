@@ -21,6 +21,8 @@
           height: 0.2px;">
     </a>
       <ul class="option" v-show="isShow">
+          <li><a href="/">主页</a></li>
+          <li v-if="user.role > 11"><a href="/admin/">管理员</a></li>
           <li><a href="/login/logout">登出</a></li>
       </ul>
   </div>

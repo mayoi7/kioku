@@ -9,6 +9,7 @@ var $app = new Vue({
       });
       return {
           user: {},
+          isShow: false,
           note: {
               title: '',
               content:  ''
@@ -16,6 +17,9 @@ var $app = new Vue({
       }
   },
   methods: {
+      switchBar: function(e) {
+          this.isShow = !this.isShow;
+      },
     submit: function(event) {
       if(!this.note.title.length || !this.note.content.length) {
           alert("输入内容不能为空");

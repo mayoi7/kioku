@@ -95,6 +95,27 @@ input {
   font-weight: 800;
 }
 
+.self-info .option {
+  font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+  font-size: 17px;
+  font-weight: bold;
+  margin: 5px 5px;
+  padding: 5px;
+  width: 64px;
+  position: absolute;
+  text-align: center;
+  background: #00000021;
+}
+
+.self-info .option li {
+    height: 22px;
+    margin: 3px auto;
+}
+
+.self-info .option a:hover {
+    color: black;
+}
+
 /* 形如div的button */
 .div-btn {
   outline: none;

@@ -11,7 +11,21 @@
 </head>
 <body>
 <div id="app">
-  <div class="name">{{user.username}}</div>
+  <div class="self-info">
+    <a class="name" href="javascript:;" @click="switchBar">
+      <div>{{user.username}}</div>
+      <hr style="
+          margin:  0;
+          margin-top: 3px;
+          background: #fff;
+          height: 0.2px;">
+    </a>
+    <ul class="option" v-show="isShow">
+      <li><a href="/">主页</a></li>
+        <li v-if="user.role > 11"><a href="/admin/">管理员</a></li>
+      <li><a href="/login/logout">登出</a></li>
+    </ul>
+  </div>
   <div class="container">
     <div class="col-md-4">
       <ul class="side-bar">

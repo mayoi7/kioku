@@ -332,16 +332,25 @@ let router = new VueRouter({
 var $app = new Vue({
     el: '#app',
     data: function() {
+        // 获取当前用户信息
+        $.get("/user/info", (data) => {
+            if(data.code === 0) {
+                this.user = data.data;
+            }
+        });
         return {
-            current: 1
+            user: {},
+            'isShow': false, // 是否显示用户信息操作的下拉栏
+            current: 1  // 当前选单编号
         };
     },
     methods: {
-        // all
         select: function(idx) {
             this.current = idx;
         },
-        // user
+        switchBar: function() {
+            this.isShow = !this.isShow;
+        }
 
     },
     router: router,
