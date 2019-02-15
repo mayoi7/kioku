@@ -61,10 +61,10 @@ public class ShiroConfig {
         // 接口开放
         filterChainDefinitionMap.put("/api/**", "anon");
 
-        // 用户，需要角色权限 “user”且已登陆
+        // 用户，需要记住我或认证
         filterChainDefinitionMap.put("/user/**", "kickout, user");
         // 管理员，需要角色权限 “admin”且已登录
-        filterChainDefinitionMap.put("/admin/**", "kickout, user, authc, roles[admin]");
+        filterChainDefinitionMap.put("/admin/**", "kickout, authc, roles[admin]");
 
         // 开放资源路径
         filterChainDefinitionMap.put("/css/**", "anon");
