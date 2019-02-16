@@ -1,8 +1,10 @@
 package com.akira.kioku.controller;
 
 import com.akira.kioku.constant.UserConstant;
+import com.akira.kioku.dto.CodeInfo;
 import com.akira.kioku.dto.Pager;
 import com.akira.kioku.dto.UserDetail;
+import com.akira.kioku.service.CodeService;
 import com.akira.kioku.service.NoteService;
 import com.akira.kioku.service.UserService;
 import com.akira.kioku.shiro.ShiroSessionListener;
@@ -13,11 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -36,12 +33,15 @@ public class AdminController {
 
     private final NoteService noteService;
 
+    private final CodeService codeService;
+
     @Autowired
     public AdminController(ShiroSessionListener shiroSessionListener,
-                           UserService userService, NoteService noteService) {
+                           UserService userService, NoteService noteService, CodeService codeService) {
         this.shiroSessionListener = shiroSessionListener;
         this.userService = userService;
         this.noteService = noteService;
+        this.codeService = codeService;
     }
 
     /**
@@ -182,6 +182,16 @@ public class AdminController {
         }
         log.warn("[授权]授权 用户-{} 失败，数据库中无记录", username);
         return ResultUtil.error("无该用户");
+    }
+
+    /**
+     * 返回所有邀请码的信息，按时间倒序排列
+     * @return {@link CodeInfo}的集合
+     */
+    @GetMapping("/codes")
+    public ResultVo returnCodesInfo() {
+        List<CodeInfo> codes = codeService.listAllAsCodeInfo();
+        return ResultUtil.success(codes);
     }
 
 }

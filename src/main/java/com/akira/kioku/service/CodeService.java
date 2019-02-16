@@ -1,6 +1,9 @@
 package com.akira.kioku.service;
 
+import com.akira.kioku.dto.CodeInfo;
 import com.akira.kioku.po.Code;
+
+import java.util.List;
 
 /**
  * 关于邀请码的检验相关的方法
@@ -22,4 +25,10 @@ public interface CodeService {
      * @param uid 使用该邀请码的用户
      */
     void setUsed(String code, Long uid);
+
+    /**
+     * 以{@link CodeInfo}形式列出所有邀请码的信息
+     * @return CodeInfo的集合
+     */
+    List<CodeInfo> listAllAsCodeInfo();
 }

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Kripath
@@ -35,6 +36,12 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository, NoteService noteService) {
         this.userRepository = userRepository;
         this.noteService = noteService;
+    }
+
+    @Override
+    public String findUsernameById(Long uid) {
+        Optional<User> user = userRepository.findById(uid);
+        return user.get().getUsername();
     }
 
     @Override

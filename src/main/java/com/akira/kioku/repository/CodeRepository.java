@@ -4,6 +4,8 @@ import com.akira.kioku.po.Code;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Kripath
  * @date Created in 22:32 2019/2/1
@@ -17,4 +19,6 @@ public interface CodeRepository extends JpaRepository<Code, Long> {
      * @return Code实体对象
      */
     Code findByCode(String code);
+
+    List<Code> findAllOrderByIdDesc();
 }

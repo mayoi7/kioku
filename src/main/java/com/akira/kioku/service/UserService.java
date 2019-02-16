@@ -12,6 +12,13 @@ import java.util.List;
 public interface UserService {
 
     /**
+     * 通过用户id查找用户的用户名
+     * @param uid 用户id
+     * @return 用户的用户名，如果用户id不存在则返回null
+     */
+    String findUsernameById(Long uid);
+
+    /**
      * 通过用户名查找用户
      * @param username 用户名
      * @return 查询的用户对象
