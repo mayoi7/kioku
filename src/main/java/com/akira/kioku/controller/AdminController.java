@@ -4,10 +4,13 @@ import com.akira.kioku.constant.UserConstant;
 import com.akira.kioku.dto.CodeInfo;
 import com.akira.kioku.dto.Pager;
 import com.akira.kioku.dto.UserDetail;
+import com.akira.kioku.po.Code;
 import com.akira.kioku.service.CodeService;
 import com.akira.kioku.service.NoteService;
 import com.akira.kioku.service.UserService;
 import com.akira.kioku.shiro.ShiroSessionListener;
+import com.akira.kioku.utils.CodeUtil;
+import com.akira.kioku.utils.EntityUtil;
 import com.akira.kioku.utils.ResultUtil;
 import com.akira.kioku.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
@@ -194,4 +197,23 @@ public class AdminController {
         return ResultUtil.success(codes);
     }
 
+    /**
+     * 生成指定数量的邀请码，并返回
+     * @param num 生成的邀请码个数，不超过10个
+     * @return 生成的邀请码
+     */
+    @GetMapping("/codes/new/{num}")
+    public ResultVo newCodes(@PathVariable("num") Integer num) {
+        // 最多一次请求的邀请码个数
+        int maxNumRequest = 10;
+        if(num < 1 || num > maxNumRequest) {
+            log.warn("[邀请码] 不合法的请求个数");
+            return ResultUtil.error("请求个数不合法");
+        }
+        List<Code> codes = EntityUtil.packageStringToCodeInList(CodeUtil.makeSomeRandomCodes(num));
+        // newCodes 添加了id属性
+        List<Code> newCodes = codeService.saveCodes(codes);
+
+        return ResultUtil.success(EntityUtil.packageCodeToCodeInfoInList(newCodes));
+    }
 }

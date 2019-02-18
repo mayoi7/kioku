@@ -1,14 +1,13 @@
 package com.akira.kioku.utils;
 
-import com.akira.kioku.dto.NoteInfo;
-import com.akira.kioku.dto.NotePackageable;
-import com.akira.kioku.dto.UserDetail;
-import com.akira.kioku.dto.UserInfo;
+import com.akira.kioku.dto.*;
 import com.akira.kioku.enums.RoleEnum;
+import com.akira.kioku.po.Code;
 import com.akira.kioku.po.User;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -73,5 +72,33 @@ public class EntityUtil {
         UserDetail detail = new UserDetail(user);
         detail.setNoteCount(noteCount);
         return detail;
+    }
+
+    /**
+     * 将字符串形式的邀请码封装成对象
+     * @param strings 邀请码组成的集合
+     * @return {@link Code}集合
+     */
+    public static List<Code> packageStringToCodeInList(List<String> strings) {
+        List<Code> codes = new ArrayList<>(strings.size());
+        for (String string : strings) {
+            codes.add(new Code(string));
+        }
+        return codes;
+    }
+
+    /**
+     * 将Code集合封装成CodeInfo集合
+     * @param codes {@link Code}集合
+     * @return {@link CodeInfo}集合
+     */
+    public static List<CodeInfo> packageCodeToCodeInfoInList(List<Code> codes) {
+        List<CodeInfo> infos = new ArrayList<>(codes.size());
+
+        for (Code code :codes) {
+            infos.add(new CodeInfo(code));
+        }
+
+        return infos;
     }
 }

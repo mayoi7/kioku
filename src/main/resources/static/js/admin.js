@@ -311,8 +311,39 @@ let role = {
     }
 };
 
-let manage = {
-    template: '',
+let code = {
+    template: `
+    <div class="code">
+          <div class="code-option">
+            <button class="div-btn add">添加一个</button>
+            <button class="div-btn add">添加十个</button>
+          </div>
+          <table class="table table-hover beauty-table code-table">
+            <thead>
+              <th>编号</th>
+              <th>邀请码</th>
+              <th>使用者</th>
+              <th>使用时间</th>
+            </thead>
+            <tbody>
+              <tr v-for='item in codes'>
+                <td :class="{new :item.ifNew}">{{item.id}}</td>
+                <td>{{item.code}}</td>
+                <td>
+                  <span v-if="item.user == '' || item.user == null" class="unused">未使用</span>
+                  <span v-else>{{item.user}}</span>
+                </td>
+                <td>{{item.date}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+`,
+    data() {
+        return {
+            codes: {}
+        };
+    },
     mounted() {
         crr = 4;
     }
@@ -325,7 +356,7 @@ let router = new VueRouter({
         { path: '/', component:  index},
         { path: '/user', component: user },
         { path: '/role', component: role },
-        { path: '/manage', component: manage }
+        { path: '/code', component: code }
     ]
 });
 
