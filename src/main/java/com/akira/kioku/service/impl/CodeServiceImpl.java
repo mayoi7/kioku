@@ -60,4 +60,12 @@ public class CodeServiceImpl implements CodeService {
         
         return infos;
     }
+
+    @Override
+    public List<Code> saveCodes(List<Code> codes) {
+        List<Code> list = codeRepository.saveAll(codes);
+        log.info("[邀请码] 新存储{}个邀请码", codes.size());
+        return list;
+    }
+
 }

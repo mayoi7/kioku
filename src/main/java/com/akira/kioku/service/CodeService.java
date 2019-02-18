@@ -31,4 +31,12 @@ public interface CodeService {
      * @return CodeInfo的集合
      */
     List<CodeInfo> listAllAsCodeInfo();
+
+    /**
+     * 存储新生成的邀请码
+     * @param codes 包含Code的List集合
+     * @return 新添加的所有Code
+     */
+    List<Code> saveCodes(List<Code> codes);
+    
 }
