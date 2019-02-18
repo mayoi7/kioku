@@ -130,3 +130,29 @@ table.search-result thead th {
 .role .opt-list a:hover {
     color: #000000b5;
 }
+
+/* code */
+.code .code-option {
+    height: 53px;
+    padding: 8px;
+}
+
+.code .add {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    font-size: 21px;
+    font-weight: 800;
+    padding: 2px;
+    margin-right: 18px;
+
+    outline: none;
+}
+
+.code .add:hover {
+    color: #fff;
+}
+
+.code-table td.new {
+    border-left: 4px solid #479174 !important;
+}

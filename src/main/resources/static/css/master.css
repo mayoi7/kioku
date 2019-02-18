@@ -209,3 +209,9 @@ span.sp-admin {
 .pagination li a.active {
   color: #fff;
 }
+
+span.unused {
+  font-size: 16px;
+  font-weight: 800;
+  color: #38a50de8;
+}

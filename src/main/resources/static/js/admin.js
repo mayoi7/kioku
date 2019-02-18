@@ -315,8 +315,8 @@ let code = {
     template: `
     <div class="code">
           <div class="code-option">
-            <button class="div-btn add">添加一个</button>
-            <button class="div-btn add">添加十个</button>
+            <button class="div-btn add" @click="addCode(1)">添加一个</button>
+            <button class="div-btn add" @click="addCode(10)">添加十个</button>
           </div>
           <table class="table table-hover beauty-table code-table">
             <thead>
@@ -326,8 +326,8 @@ let code = {
               <th>使用时间</th>
             </thead>
             <tbody>
-              <tr v-for='item in codes'>
-                <td :class="{new :item.ifNew}">{{item.id}}</td>
+              <tr v-for='(item, idx) in codes'>
+                <td :class="{new :idx < new_idx}">{{item.id}}</td>
                 <td>{{item.code}}</td>
                 <td>
                   <span v-if="item.user == '' || item.user == null" class="unused">未使用</span>
@@ -340,9 +340,31 @@ let code = {
         </div>
 `,
     data() {
+        $.get("/admin/codes", (data) => {
+            if(data.code === 0) {
+                this.codes = data.data;
+            } else {
+                alert(data.msg);
+            }
+        });
         return {
+            // 标志新生成的code为前new_idx个
+            new_idx: 0,
             codes: {}
         };
+    },
+    methods: {
+      addCode(num) {
+          $.get("/admin/codes/new/" + num, (data) => {
+              if(data.code === 0) {
+                  this.new_idx = num;
+                  this.codes = data.data.concat(this.codes);
+              } else {
+                  this.new_idx = 0;
+                  alert(data.msg);
+              }
+          })
+      }
     },
     mounted() {
         crr = 4;
