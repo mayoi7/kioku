@@ -123,7 +123,7 @@ let user = {
                 alert("不能输入空值");
                 return;
             }
-            $.get("api/user/" + this.$data.name, (data) => {
+            $.get("/api/user/" + this.$data.name, (data) => {
                 if(data.code === 0) {
                     this.$data.users = [data.data];
                 }
@@ -263,7 +263,7 @@ let role = {
                 alert("不能输入空值");
                 return;
             }
-            $.get("api/user/" + this.$data.name, (data) => {
+            $.get("/api/user/" + this.$data.name, (data) => {
                 if(data.code === 0) {
                     this.$data.user = data.data;
                 }
