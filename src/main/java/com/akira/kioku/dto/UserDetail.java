@@ -31,7 +31,7 @@ public class UserDetail {
     private Long noteCount;
 
     /** 用户注册时间 */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date regDate;
 
     /** 注册时使用的邀请码 */
