@@ -39,8 +39,9 @@
     }
 
     .container .option a {
-      font-size: 18px;
       margin: auto 22px;
+      font-weight: 800;
+      font-size: 18px;
     }
 
     .text-input::-webkit-input-placeholder {
@@ -56,7 +57,7 @@
     <form id="login" action="/" method="post" @submit.prevent="submit">
       <input class="text-input" type="text" name="username" v-model="username" placeholder="此处用户名" autocomplete="off">
       <input class="text-input" type="password" name="password" v-model="password" placeholder="此处密码" autocomplete="off">
-      <button type="submit" class="div-btn" style="font-size: 30px; outline: none;">登陆</button>
+      <button type="submit" class="div-btn" style="font-size: 30px; font-weight: 800; outline: none;">登陆</button>
     </form>
     <div class="option">
       <a href="#" class="forget">忘记密码</a>

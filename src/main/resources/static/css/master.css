@@ -1,10 +1,10 @@
 /* 项目的公共样式 */
 
 body {
-  /* font-family: "Merriweather", Georgia, serif; */
+   font-family: "Merriweather", Georgia, serif;
   /* font-family: soleil, Raleway, sans-serif; */
   /* font-family: 'lora'; */
-  font-family: 'FangSong', 'STFangSong', serif;
+  /*font-family: 'FangSong', 'STFangSong', serif;*/
   background: #5a565f;
 }
 
