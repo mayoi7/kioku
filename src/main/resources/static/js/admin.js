@@ -111,9 +111,9 @@ let user = {
             name: '',
             users: [],
             pager: {  // ajax, update 'users' synchronously
-                count: 1,
-                currentPage: 1,
-                pages: [1]
+                count: 1,   // 总数
+                currentPage: 1, // 当前页
+                pages: [1]  // 当前显示的页码
             }
         };
     },
@@ -131,7 +131,12 @@ let user = {
         },
         switch_page: function(tar) {
             /* 通过ajax获取新页内容，然后修改users数据 */
-            // ...
+            $.get("/admin/query/user/" + tar, (data) => {
+                if(data.code === 0) {
+                    this.$data.users = data.data;
+                }
+            });
+
             let arr = this.pager.pages;
             let crt = this.pager.currentPage;
 
@@ -163,7 +168,11 @@ let user = {
         },
         go_first_page: function() {
             /* 通过ajax获取新页内容，然后修改users数据 */
-            // ...
+            $.get("/admin/query/user/1", (data) => {
+                if(data.code === 0) {
+                    this.$data.users = data.data;
+                }
+            });
 
             if(this.pager.count > 5) {
                 this.pager.pages = [1, 2, 3, 4, 5];
@@ -172,7 +181,11 @@ let user = {
         },
         go_last_page: function() {
             /* 通过ajax获取新页内容，然后修改users数据 */
-            // ...
+            $.get("/admin/query/user/" + this.pager.count, (data) => {
+                if(data.code === 0) {
+                    this.$data.users = data.data;
+                }
+            });
 
             if(this.pager.count > 5) {
                 this.pager.pages = [this.pager.count-4, this.pager.count-3,
