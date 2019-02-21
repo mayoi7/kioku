@@ -1,11 +1,16 @@
 package com.akira.kioku.controller;
 
+import com.akira.kioku.constant.EmailConstant;
+import com.akira.kioku.constant.WebConstant;
+import com.akira.kioku.dto.ExpireVerify;
 import com.akira.kioku.po.Code;
 import com.akira.kioku.po.User;
 import com.akira.kioku.service.CodeService;
 import com.akira.kioku.service.UserService;
 import com.akira.kioku.utils.EntityUtil;
+import com.akira.kioku.utils.MailUtil;
 import com.akira.kioku.utils.ResultUtil;
+import com.akira.kioku.utils.TokenUtil;
 import com.akira.kioku.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -15,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -32,10 +38,13 @@ public class LoginController {
 
     private final CodeService codeService;
 
+    private final MailUtil mailUtil;
+
     @Autowired
-    public LoginController(UserService userService, CodeService codeService) {
+    public LoginController(UserService userService, CodeService codeService, MailUtil mailUtil) {
         this.userService = userService;
         this.codeService = codeService;
+        this.mailUtil = mailUtil;
     }
 
     /**
@@ -172,4 +181,82 @@ public class LoginController {
 
         return ResultUtil.success();
     }
+
+    /**
+     * 忘记密码
+     * @param username 请求重置密码用户的用户名
+     * @param session 保存在服务器存储的超时验证对象(key值为ds)
+     * @return 结果码
+     */
+    @PostMapping("/forget/{username}")
+    public ResultVo forgetPassword(@PathVariable("username") String username, HttpSession session) {
+        User user = userService.findByUsername(username);
+        if(user == null) {
+            log.warn("[密码重置] 用户名-{} 不存在", username);
+            return ResultUtil.error("用户名不存在");
+        } else if(user.getEmail() == null) {
+            log.warn("[密码重置] 用户-{} 没有填写邮箱", username);
+            return ResultUtil.error("没有填写邮箱无法找回");
+        }
+
+        String email = user.getEmail();
+
+        // 重置链接过期时间(时间戳形式)
+        Long expireDate = System.currentTimeMillis() + EmailConstant.URL_EFFECTIVE_TIME;
+        // 生成随机密钥
+        String secretKey = TokenUtil.makeUUID();
+        // 生成数字签名
+        String digitalSignature = TokenUtil.makeDigitalSignature(username, expireDate, secretKey);
+        // 生成超时验证的对象（保存超时时间和密钥）
+        ExpireVerify expireVerify = new ExpireVerify(expireDate, secretKey);
+        // 设置到session中
+        session.setAttribute("ds", expireVerify);
+
+        // 发送重置密码的邮件
+//        mailUtil.sendResetPasswordMail(email,
+//                WebConstant.HOSTNAME + "/login/reset/" + username + "/" + digitalSignature);
+
+        log.info("[密码重置] 已向 邮箱-{} 发送 用户-{} 的密码重置链接，", email, username);
+        return ResultUtil.success(digitalSignature);
+    }
+
+    /**
+     * 重置密码，通过session中的超时验证与客户端传来的的进行对比，
+     * 如果合法并一致则跳转到重置页面
+     * @param username 被重置密码用户的用户名
+     * @param serviceDS 客户端数字签名
+     * @param session 保存在服务器存储的超时验证对象(key值为ds)
+     * @return 结果码
+     */
+    @GetMapping("/reset/password/{username}/{ds}")
+    public ModelAndView resetPassword(@PathVariable("username") String username,
+                                  @PathVariable("ds") String serviceDS, HttpSession session) {
+        // 从session中获取服务器端存储的超时验证对象
+        ExpireVerify servletEV = (ExpireVerify) session.getAttribute("ds");
+        if(servletEV == null) {
+            log.warn("[密码重置] 服务器未存储签名，用户-{} 可能未请求重置密码", username);
+            return new ModelAndView("error/error");
+        }
+
+        // 生成服务器端数字签名进行比对
+        String servletDS = TokenUtil.makeDigitalSignature(username,
+                servletEV.getExpireDate(), servletEV.getSecretKey());
+
+        if(!servletDS.equals(serviceDS)) {
+            log.warn("[密码重置] 用户-{} 数字签名校验不一致", username);
+            return new ModelAndView("error/error");
+        }
+
+        Long currentDate = System.currentTimeMillis();
+        if(currentDate - servletEV.getExpireDate() > 0) {
+            // 超出时限
+            log.warn("[密码重置] 用户-{} 密码重置链接超时失效");
+            return new ModelAndView("error/error");
+        }
+
+        log.info("[密码重置] 用户-{} 数字签名校验通过", username);
+        // 跳转到密码重置页
+        return new ModelAndView("login/register");
+    }
+
 }
