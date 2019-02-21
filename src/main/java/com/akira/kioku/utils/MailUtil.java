@@ -1,5 +1,6 @@
 package com.akira.kioku.utils;
 
+import com.akira.kioku.constant.EmailConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,6 +28,12 @@ public class MailUtil {
         this.mailSender = mailSender;
     }
 
+    /**
+     * 发送一封邮件
+     * @param to 接收方邮箱
+     * @param subject 主题
+     * @param content 内容
+     */
     public void sendMail(String to, String subject, String content) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
@@ -35,5 +42,18 @@ public class MailUtil {
         msg.setText(content);
 
         mailSender.send(msg);
+    }
+
+    /**
+     * 发送一封重置密码邮件
+     * @param to 接收方邮箱
+     * @param url 重置密码的链接
+     */
+    public void sendResetPasswordMail(String to, String url) {
+        String resetPasswordContent = "您好，点击下方链接可重置密码，有效时间为30分钟\n";
+        String resetPasswordTitle = "Kioku记事簿-重置密码";
+
+        String content = resetPasswordContent + url;
+        sendMail(to, resetPasswordTitle, content);
     }
 }
