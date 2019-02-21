@@ -7,6 +7,7 @@ import com.akira.kioku.repository.UserRepository;
 import com.akira.kioku.service.NoteService;
 import com.akira.kioku.service.UserService;
 import com.akira.kioku.utils.EntityUtil;
+import com.akira.kioku.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,6 +135,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean authorizeByUsername(String username) {
         return updateUserRole(username, UserConstant.ADMIN_ROLE);
+    }
+
+    @Override
+    public void resetPassword(User user, Long userId, String password) {
+
+        // 加密后的密码
+        String encryptedToken
+                = TokenUtil.makeTEncryptTokenBySaltedMd5(password, user.getUsername()).toString();
+        user.setPassword(encryptedToken);
+        userRepository.saveAndFlush(user);
     }
 
     @RequiresRoles({"admin"})

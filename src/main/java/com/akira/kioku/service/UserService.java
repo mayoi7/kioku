@@ -87,4 +87,12 @@ public interface UserService {
      * @return false表示授权失败(数据库中没有该用户)
      */
     boolean authorizeByUsername(String username);
+
+    /**
+     * 重置用户密码
+     * @param user 被重置密码的用户
+     * @param userId 用户id（不使用，仅用于提醒调用者需要注意id属性）
+     * @param password 明文密码
+     */
+    void resetPassword(User user, Long userId, String password);
 }
