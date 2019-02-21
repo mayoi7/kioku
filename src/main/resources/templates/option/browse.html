@@ -45,7 +45,7 @@
         <div class="content">
           <pre>{{current.content}}</pre>
         </div>
-        <div class="time">记于{{current.date}}</div>
+        <div class="time" v-if="current.date != null">记于{{current.date}}</div>
         <div style="float: none;"></div>
       </div>
     </div>
