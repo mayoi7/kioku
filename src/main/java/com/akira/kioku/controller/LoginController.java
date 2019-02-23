@@ -297,7 +297,7 @@ public class LoginController {
         try {
             subject.login(token);
         } catch (Exception e) {
-            log.error("[密码重置] 用户-{} 密码异常，可能为数据库更新异常", username);
+            log.error("[密码重置][登陆] 用户-{} 密码异常，可能为数据库更新异常", username);
         }
         return ResultUtil.success();
     }
