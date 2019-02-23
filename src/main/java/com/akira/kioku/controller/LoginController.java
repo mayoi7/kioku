@@ -1,7 +1,6 @@
 package com.akira.kioku.controller;
 
 import com.akira.kioku.constant.EmailConstant;
-import com.akira.kioku.constant.WebConstant;
 import com.akira.kioku.dto.ExpireVerify;
 import com.akira.kioku.po.Code;
 import com.akira.kioku.po.User;
@@ -213,8 +212,7 @@ public class LoginController {
         session.setAttribute("ds", expireVerify);
 
         // 发送重置密码的邮件
-//        mailUtil.sendResetPasswordMail(email,
-//                WebConstant.HOSTNAME + "/login/reset/" + username + "/" + digitalSignature);
+        mailUtil.sendResetPasswordMail(email, "/login/reset/" + username + "/" + digitalSignature);
 
         log.info("[密码重置] 已向 邮箱-{} 发送 用户-{} 的密码重置链接，", email, username);
         return ResultUtil.success(digitalSignature);
@@ -256,7 +254,7 @@ public class LoginController {
 
         log.info("[密码重置] 用户-{} 数字签名校验通过", username);
         // 跳转到密码重置页
-        return new ModelAndView("login/register");
+        return new ModelAndView("login/reset");
     }
 
 }

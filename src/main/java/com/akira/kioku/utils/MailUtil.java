@@ -17,11 +17,13 @@ public class MailUtil {
 
     private final JavaMailSender mailSender;
 
-    /**
-     *  发送者的邮箱
-     */
+    /** 发送者的邮箱 */
     @Value("${spring.mail.username}")
     private String from;
+
+    /** 主机地址 */
+    @Value("${website.host.name}")
+    private String host;
 
     @Autowired
     public MailUtil(JavaMailSender mailSender) {
@@ -47,13 +49,15 @@ public class MailUtil {
     /**
      * 发送一封重置密码邮件
      * @param to 接收方邮箱
-     * @param url 重置密码的链接
+     * @param url 重置密码的链接（无主机ip）
      */
     public void sendResetPasswordMail(String to, String url) {
         String resetPasswordContent = "您好，点击下方链接可重置密码，有效时间为30分钟\n";
         String resetPasswordTitle = "Kioku记事簿-重置密码";
 
-        String content = resetPasswordContent + url;
+        String resetHref = "</a href='" + host + url + "'>点击这里进行密码重置</a>";
+
+        String content = resetPasswordContent + resetHref;
         sendMail(to, resetPasswordTitle, content);
     }
 }
