@@ -182,12 +182,12 @@ public class LoginController {
     }
 
     /**
-     * 忘记密码
+     * 忘记密码，向用户邮箱发送重置密码网站的链接
      * @param username 请求重置密码用户的用户名
      * @param session 保存在服务器存储的超时验证对象(key值为ds)
      * @return 结果码
      */
-    @PostMapping("/forget/{username}")
+    @PostMapping("/password/{username}/forget")
     public ResultVo forgetPassword(@PathVariable("username") String username, HttpSession session) {
         User user = userService.findByUsername(username);
         if(user == null) {
@@ -212,23 +212,27 @@ public class LoginController {
         session.setAttribute("ds", expireVerify);
 
         // 发送重置密码的邮件
-        mailUtil.sendResetPasswordMail(email, "/login/reset/" + username + "/" + digitalSignature);
+        mailUtil.sendResetPasswordMail(email,
+                "/login/password/" + username + "/reset/" + digitalSignature);
 
         log.info("[密码重置] 已向 邮箱-{} 发送 用户-{} 的密码重置链接，", email, username);
         return ResultUtil.success(digitalSignature);
     }
 
     /**
-     * 重置密码，通过session中的超时验证与客户端传来的的进行对比，
+     * 获取跳转到重置密码页面的许可，通过session中的超时验证与客户端传来的的进行对比，
      * 如果合法并一致则跳转到重置页面
      * @param username 被重置密码用户的用户名
      * @param serviceDS 客户端数字签名
      * @param session 保存在服务器存储的超时验证对象(key值为ds)
      * @return 结果码
      */
-    @GetMapping("/reset/password/{username}/{ds}")
-    public ModelAndView resetPassword(@PathVariable("username") String username,
+    @GetMapping("/password/{username}/reset/{ds}")
+    public ModelAndView requestResetPermission(@PathVariable("username") String username,
                                   @PathVariable("ds") String serviceDS, HttpSession session) {
+        // 用户点击链接的时间
+        Long currentDate = System.currentTimeMillis();
+
         // 从session中获取服务器端存储的超时验证对象
         ExpireVerify servletEV = (ExpireVerify) session.getAttribute("ds");
         if(servletEV == null) {
@@ -240,14 +244,18 @@ public class LoginController {
         String servletDS = TokenUtil.makeDigitalSignature(username,
                 servletEV.getExpireDate(), servletEV.getSecretKey());
 
+        // 校验数据签名是否一致
         if(!servletDS.equals(serviceDS)) {
+            // 移除服务端的数字签名，如果重置密码时没有ds参数说明用户没有进行校验或校验失败
+            session.removeAttribute("ds");
             log.warn("[密码重置] 用户-{} 数字签名校验不一致", username);
             return new ModelAndView("error/error");
         }
 
-        Long currentDate = System.currentTimeMillis();
+        // 超出时限
         if(currentDate - servletEV.getExpireDate() > 0) {
-            // 超出时限
+            // 移除服务端的数字签名，如果重置密码时没有ds参数说明用户没有进行校验或校验失败
+            session.removeAttribute("ds");
             log.warn("[密码重置] 用户-{} 密码重置链接超时失效");
             return new ModelAndView("error/error");
         }
@@ -257,4 +265,40 @@ public class LoginController {
         return new ModelAndView("login/reset");
     }
 
+
+    /**
+     * 进行密码的重置
+     * @param password 明文密码
+     * @param username 用户名
+     * @param session 存储数字签名的验证结果（如果有key值为ds的session则证明校验通过）
+     * @return 结果码
+     */
+    @PostMapping("/password/{username}/reset")
+    public ResultVo resetPassword(@RequestParam("password") String password,
+                                  @PathVariable("username") String username, HttpSession session) {
+        Object ds = session.getAttribute("ds");
+        if(ds == null) {
+            // 用户未进行校验/校验失败就直接发送请求重置密码
+            return ResultUtil.error("用户未进行校验");
+        }
+
+        User user = userService.findByUsername(username);
+        if(user == null) {
+            log.warn("[密码重置] 用户-{} 不存在", username);
+            return ResultUtil.error();
+        }
+        userService.resetPassword(user, user.getId(), password);
+        log.info("[密码重置] 用户-{} 更新密码完毕", username);
+
+        // 自动登陆
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        token.setRememberMe(true);
+        try {
+            subject.login(token);
+        } catch (Exception e) {
+            log.error("[密码重置] 用户-{} 密码异常，可能为数据库更新异常", username);
+        }
+        return ResultUtil.success();
+    }
 }
