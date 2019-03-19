@@ -15,6 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.EmitUtils;
+import org.springframework.context.annotation.Lazy;
 
 import javax.management.relation.Role;
 import java.util.HashSet;
@@ -30,6 +31,7 @@ public class CustomRealm extends AuthorizingRealm {
     private UserService userService;
 
     @Autowired
+    @Lazy
     private void setUserMapper(UserService userService) {
         this.userService = userService;
     }

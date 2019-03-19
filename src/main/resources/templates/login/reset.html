@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>重置密码</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/master.css">
+    <style media="screen">
+        body {
+            font-family: "Adobe Garamond W01 Bd",RyuminPro-Bold,"游明朝","Yu Mincho","游明朝体",YuMincho,"ヒラギノ明朝 Pro W3","Hiragino Mincho Pro",HiraMinProN-W3,"HGS明朝E","ＭＳ Ｐ明朝","MS PMincho",serif;
+            /* 白花色 */
+            background-color: #e8ecef;
+        }
+
+        #f {
+            margin: 50px auto;
+            padding: 20px;
+            height: 300px;
+            width: 712px;
+        }
+
+        .input-div {
+            margin: 17px 15px;
+            padding: 6px;
+            height: 53px;
+        }
+
+        .input-div .text-input {
+            display: inline-block;
+            height: 29px;
+            padding: 0 6px;
+            border-bottom: 1.5px solid #44444452;
+            width: 222px;
+            font-size: 20px;
+            margin: 10px 20px 10px 198px;
+        }
+
+        .input-div .msg {
+            display: inline-block;
+            color: #ea89ad;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        button.submit {
+            display: block;
+            text-align: center;
+            margin: 10px auto;
+            width: 118px;
+            height: 50px;
+            padding: 6px;
+            font-size: 24px;
+            font-weight: 900;
+            color: #636566;
+        }
+
+        input.error {
+            border-bottom: 1.3px solid #ea89ad !important;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <form id="f" action="#" @submit.prevent="submit">
+            <div class="input-div">
+                <input :class="{error: errors[0]}"  type="password" class="text-input" @blur="validPassword"
+                       name="password" v-model="password" placeholder="新密码在这里输入" autocomplete="off">
+                <div v-if="errors[0]" class="msg">不合法的密码</div>
+            </div>
+            <div class="input-div">
+                <input :class="{error: errors[1]}" type="password" class="text-input" @blur="validRepeat"
+                       name="repeat" v-model="repeat" placeholder="请重复输入一遍" autocomplete="off">
+                <div v-if="errors[1]" class="msg">不一致的两次输入</div>
+            </div>
+            <button type="submit" class="div-btn submit">重置</button>
+        </form>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/vue.min.js"></script>
+<script type="text/javascript">
+    /*jshint esversion: 6 */
+    let re = /^(?:\d+|[a-zA-Z]+|[!@#$%^&*]+){6,20}$/;
+    let $app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                password: '',
+                repeat: '',
+                errors: [false, false]
+            };
+        },
+        methods: {
+            submit() {
+                this.validPassword();
+                this.validRepeat();
+                if(this.errors[0] || this.errors[1]) {
+                    // 没有通过验证
+                    alert("failure")
+                } else {
+                    /* 异步提交更新，然后进行路由跳转 */
+                    alert("success");
+                }
+            },
+            validPassword() {
+                if(!re.test(this.password)) {
+                    /* 不合法的密码 */
+                    Vue.set(this.errors, 0, true);
+                    // this.errors[0] = true;
+                } else {
+                    Vue.set(this.errors, 0, false);
+                    // this.errors[0] = false;
+                }
+            },
+            validRepeat() {
+                if(this.password !== this.repeat) {
+                    /* 输入不一致 */
+                    Vue.set(this.errors, 1, true);
+                    // this.errors[1] = true;
+                } else {
+                    Vue.set(this.errors, 1, false);
+                    // this.errors[0] = false;
+                }
+            }
+        }
+    });
+</script>
+</html>

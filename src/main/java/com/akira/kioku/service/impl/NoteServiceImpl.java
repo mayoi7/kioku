@@ -12,6 +12,8 @@ import com.akira.kioku.utils.EntityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -49,6 +51,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @Cacheable(value = "notes", key = "#userId + '-' +  #pageNum")
     public List<NoteInfo> listAllInPage(Long userId, int pageNum) {
         Pageable pageable = PageRequest.of(pageNum, NoteConstant.PAGE_NUM);
 
@@ -63,6 +66,7 @@ public class NoteServiceImpl implements NoteService {
     @Transactional(rollbackFor = Exception.class)
     @RequiresRoles({"user"})
     @Override
+    @CacheEvict(value = "notes", allEntries = true)
     public void saveNote(Long userId, NoteInfo note) {
         // 先保存标题部分，从返回值获取主键
         Note noteGen = noteRepository.save(new Note(userId, note.getTitle()));

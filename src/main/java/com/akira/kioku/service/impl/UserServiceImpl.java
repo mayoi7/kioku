@@ -11,6 +11,9 @@ import com.akira.kioku.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,13 +43,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(cacheNames = "uid", key = "#uid")
     public String findUsernameById(Long uid) {
         Optional<User> user = userRepository.findById(uid);
         return user.get().getUsername();
     }
 
     @Override
+    @Cacheable(cacheNames = "username", key = "#username")
     public User findByUsername(String username) {
+        System.out.println("查询数据库");
         return userRepository.findByUsername(username);
     }
 
@@ -69,6 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @RequiresRoles({"admin"})
     @Override
+    @Cacheable(cacheNames = "detail", key = "#page")
     public List<UserDetail> listAllDetailInPage(Integer page) {
         Pageable pageable = PageRequest.of(page, UserConstant.PAGE_NUM);
 
@@ -138,6 +145,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = "username", key = "#user.username")
     public void resetPassword(User user, Long userId, String password) {
 
         // 加密后的密码
